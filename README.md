@@ -1,10 +1,10 @@
 # liang3p.github.io
 Static pages for [instore.top](http://instore.top).
-Instore.top was setted up by SinaAppEngine(SAE) in the earlier time, Issues about the quota and stability bother me much.Sicee it moves to Github Pages,I have Nothing to worried about.
+Instore.top was setted up by SinaAppEngine(SAE) in the earlier time, issues about the quota and stability bother me much. Since it moves to Github Pages,I have Nothing to worried about.
 
 Based on hexo ,It's easy to built this site in the short time. Here's the basic configuration and commit history.
 
-## basic configuration
+## Basic Configuration
 Theme:[material](https://github.com/viosey/hexo-theme-material)
 
 
