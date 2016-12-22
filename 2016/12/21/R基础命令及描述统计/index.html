@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        R基础命令及描述统计 | Instore.top
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Liang3p">
+    <meta name="description" content="Learn More, Share More.">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Instore.top">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://liang3p.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="R基础命令及描述统计 | Instore.top">
+    <meta property="og:description" content="Learn More, Share More.">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#工作目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">工作目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据导入"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据导入</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#描述统计"><span class="post-toc-number">3.</span> <span class="post-toc-text">描述统计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据可视化"><span class="post-toc-number">4.</span> <span class="post-toc-text">数据可视化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Iris-鸢尾花-数据可视化"><span class="post-toc-number">5.</span> <span class="post-toc-text">Iris(鸢尾花)数据可视化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ggplot2绘图"><span class="post-toc-number">6.</span> <span class="post-toc-text">ggplot2绘图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用lattice绘图"><span class="post-toc-number">7.</span> <span class="post-toc-text">使用lattice绘图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#探索鸢尾花数据集"><span class="post-toc-number">8.</span> <span class="post-toc-text">探索鸢尾花数据集</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用rmarkdown创建动态报告"><span class="post-toc-number">9.</span> <span class="post-toc-text">使用rmarkdown创建动态报告</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+
+<!-- header_home -->
+
+<!-- header_home -->
+<div class="material-index mdl-grid" style="margin-top: -145px;padding-left: 10px;padding-bottom: 80px;">
+    <a href="/">
+        <img src="/img/instore.top.png" alt="logo" />
+    </a>
+</div>
+
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            R基础命令及描述统计
+        </p>
+    </div>
+
+	
+
+
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Liang3p</strong>
+        <span>12月 21, 2016</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/R/">R</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/可视化/">可视化</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/描述统计/">描述统计</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据探索/">数据探索</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=R基础命令及描述统计&url=http://liang3p.github.io//2016/12/21/R基础命令及描述统计/index.html&via=Liang3p" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://liang3p.github.io//2016/12/21/R基础命令及描述统计/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=R基础命令及描述统计&url=http://liang3p.github.io//2016/12/21/R基础命令及描述统计/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>2016/7/24 18:54:29 Liangwl</p>
+<blockquote>
+<p>生成学生成绩,统计平均分,总分,极差,方差<br>基础绘图命令<br>内置数据集iris探索数据<br>高级绘图lattice&amp;ggplot2<br>使用rmarkdown创建动态报告</p>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="工作目录"><a href="#工作目录" class="headerlink" title="工作目录"></a>工作目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setwd(&quot;D:/Dev/R&quot;)                                  #修改当前的工作目录</div><div class="line">getwd()                                            #显示当前的工作目录</div></pre></td></tr></table></figure>
+<h2 id="数据导入"><a href="#数据导入" class="headerlink" title="数据导入"></a>数据导入</h2><ul>
+<li><p>生成数据集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">data()                                             #查看内置数据集</div><div class="line">stu_id &lt;- seq(201020509001, 201020509064)          #这里我们随机生成一些数据</div><div class="line">x1 &lt;- round(runif(64, min=80, max=100))            #均匀分布</div><div class="line">x2 &lt;- round(rnorm(64, mean=80, sd=7))              #正态分布</div><div class="line">x3 &lt;- round(rnorm(64, mean=83, sd=18))             #round取四舍五入</div></pre></td></tr></table></figure>
+</li>
+<li><p>数据筛选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">set.seed(100)    #set.seed()命令的作用是设定生成随机数的种子,种子是为了让结果具有重复性.如果不设定种子,生成的随机数无法重现</div><div class="line">x3[which( x3&gt;100 )] = 100    #将大于100分的成绩赋值为100</div><div class="line">X &lt;- data.frame(&quot;Student_id&quot; = stu_id, &quot;Math&quot;=x1, &quot;Data_structure&quot;=x2, &quot;Introduction_to_algorithms&quot;=x3)</div><div class="line">print(X)</div></pre></td></tr></table></figure>
+</li>
+<li><p>数据导入(文件读写)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">write.table(X, file=&quot;student_score.txt&quot;, col.names=T, row.names=F,sep=&quot; &quot;)</div><div class="line">X &lt;- read.table(file=&quot;student_score.txt&quot;, header=T)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="描述统计"><a href="#描述统计" class="headerlink" title="描述统计"></a>描述统计</h2><ul>
+<li>描述统计<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">write.table(X, file=&quot;student_score.txt&quot;, col.names=T, row.names=F,sep=&quot; &quot;)</div><div class="line">X &lt;- read.table(file=&quot;student_score.txt&quot;, header=T)</div><div class="line">colMeans(X)</div><div class="line">colMeans(X)[2:4]</div><div class="line">colMeans(X)[c(&quot;Math&quot;, &quot;Data_structure&quot;, &quot;Introduction_to_algorithms&quot;)]</div><div class="line">apply(X, 2, mean)            #在列的方向取平均值</div><div class="line">apply(X, 1, mean)            #在行的方向取平均值</div><div class="line">single_stu_avg &lt;- data.frame(X[1],&quot;Avg_single_stu&quot;=apply(X[2:4], 1, mean))</div><div class="line">single_stu_sum &lt;- data.frame(X[1],&quot;Sum_single_stu&quot;=apply(X[2:4], 1, sum))</div><div class="line">course_sco_avg &lt;- apply(X[2:4], 2, mean)</div><div class="line">course_sco_max &lt;- apply(X[2:4], 2, max)</div><div class="line">course_sco_min &lt;- apply(X[2:4], 2, min)</div><div class="line">if(FALSE)&#123;</div><div class="line">names(X) &lt;- NULL               #清空列名</div><div class="line">mean(X)                        #报错,不支持数据框,mean只支持vector的平均值计算</div><div class="line">&#125;</div><div class="line">is(X)                          #列出X的属性</div><div class="line">sapply(X[2:4],mean)            #平均值</div><div class="line">sapply(X[2:4],sd)              #标准差</div><div class="line">summary(X[2:4])                #数据概览</div><div class="line">X$Student_id[which.max(apply(X[2:4],1,sum))]         #总分最高分学生学号</div><div class="line">names(X) &lt;- c(&quot;stu_id&quot;, &quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;)            #替换列名</div><div class="line">X$stu_id[which.max(apply(X[2:4],1,sum))]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><ul>
+<li><p>直方图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hist(X$stu_id)</div><div class="line">hist(X$x1)</div><div class="line">hist(X$x2)</div><div class="line">hist(X$x3)</div></pre></td></tr></table></figure>
+</li>
+<li><p>散点图,观察各科成绩的关联关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">plot(x1,x2)</div><div class="line">plot(X$x2,X$x3,</div><div class="line">main=&quot;数据结构与算法导论成绩的关系&quot;,</div><div class="line">xlab=&quot;数据结构&quot;,</div><div class="line">ylab=&quot;算法导论&quot;,</div><div class="line">xlim=c(0,100),</div><div class="line">ylim=c(0,100),</div><div class="line">xaxs=&quot;i&quot;,                        #Set x axis style as internal</div><div class="line">yaxs=&quot;i&quot;,</div><div class="line">col=&quot;red&quot;,</div><div class="line">pch=19)                          #Set the plotting symbol to filled dots</div></pre></td></tr></table></figure>
+</li>
+<li><p>柱状图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">table(X$x1)                      #各数值的频数</div><div class="line">barplot(table(X$x1))             #柱状图</div><div class="line">pie(table(X$x2))                 #饼图</div></pre></td></tr></table></figure>
+</li>
+<li><p>箱线图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">boxplot(X$x1,X$x2,X$x3)</div><div class="line">boxplot(X[2:4], col=c(&quot;red&quot;, &quot;green&quot;, &quot;yellow&quot;), notch=T)</div><div class="line">boxplot(X[2:4], horizontal=T)</div></pre></td></tr></table></figure>
+</li>
+<li><p>星相图/雷达图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stars(X[2:4])</div><div class="line">stars(X[2:4], full=T, draw.segment=T)</div><div class="line">stars(X[2:4], full=F, draw.segment=T)</div></pre></td></tr></table></figure>
+</li>
+<li><p>脸谱图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">install.packages(&quot;aplpack&quot;)				#安装aplpack包，一次安装多个包 install.packages(c(&apos;aplpack&apos;,&apos;TeachingDemos&apos;))</div><div class="line">library(aplpack)						#载入包,library()载入后返回已加载包列表,require()载入后返回加载结果bool值</div><div class="line">faces(X[2:4])</div><div class="line">detach(package:aplpack)                 #卸载包</div><div class="line">install.packages(&quot;TeachingDemos&quot;)       #使用TeachingDemos绘制脸谱图</div><div class="line">library(TeachingDemos)</div><div class="line">faces2(X[2:4])</div></pre></td></tr></table></figure>
+</li>
+<li><p>茎叶图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stem(X$x2)</div></pre></td></tr></table></figure>
+</li>
+<li><p>QQ图(直线斜率=标准差,截距=均值,点的散布越接近直线,则越接近正态分布)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">qqnorm(X$x1)</div><div class="line">qqline(X$x1)</div></pre></td></tr></table></figure>
+</li>
+<li><p>连线图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(X$x1,X$x2,type=&quot;l&quot;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>多条曲线</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">plot(X$x1, type=&quot;l&quot;, col=&quot;red&quot;,</div><div class="line">ylim=c(0,100),</div><div class="line">main=&quot;Monthly Rainfall in major cities&quot;,</div><div class="line">xlab=&quot;Month of Year&quot;,</div><div class="line">ylab=&quot;Rainfall(mm)&quot;,</div><div class="line">lwd=2)</div><div class="line">lines(X$x2, type=&quot;l&quot;, col=&quot;blue&quot;,lwd=2)</div><div class="line">lines(X$x3, type=&quot;l&quot;, col=&quot;green&quot;,lwd=2)</div></pre></td></tr></table></figure>
+</li>
+<li><p>分布函数的密度图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(density(X$x1))</div></pre></td></tr></table></figure>
+</li>
+<li><p>绘制内置数据集mtcars的热力图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">heatmap(as.matrix(mtcars),</div><div class="line">Rowv=NA,</div><div class="line">Colv=NA,</div><div class="line">col=heat.colors(256),</div><div class="line">scale=&quot;column&quot;,</div><div class="line">margins=c(3,8),</div><div class="line">main=&quot;Car characteristics by Model&quot;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Iris-鸢尾花-数据可视化"><a href="#Iris-鸢尾花-数据可视化" class="headerlink" title="Iris(鸢尾花)数据可视化"></a>Iris(鸢尾花)数据可视化</h2><ul>
+<li><p>绘制向日葵散点图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sunflowerplot(iris[,3:4], col=&quot;gold&quot;, seg.col=&quot;gold&quot;)    #向日葵散点图,克服散点图数据点重叠的问题</div></pre></td></tr></table></figure>
+</li>
+<li><p>绘制散点图集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">pairs(iris[,1:4])</div><div class="line">plot(iris[,1:4],</div><div class="line">main=&quot;Relationships between charactertics of iris flowers&quot;,</div><div class="line">pch=19,</div><div class="line">col=&quot;blue&quot;,</div><div class="line">cex=0.9)</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置绘图参数 par</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">par(mfrow=c(3,1))            #将图形窗口分成3行1列 mfrow</div><div class="line">colors()                     #可以使用的颜色</div><div class="line">plot(X$x1,X$x2,col=&quot;red&quot;)</div><div class="line">plot(X$x1,X$x3,col=&quot;blue&quot;)</div><div class="line">plot(X$x2,X$x3,col=&quot;darkgreen&quot;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>多次绘图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dev.cur()                      #当前绘图设备</div><div class="line">dev.new()                      #创建新的绘图设备</div><div class="line">plot(iris[,1:4])               #在新建的绘图设备绘图</div><div class="line">dev.list()                     #列出所有绘图设备</div><div class="line">dev.next(which = dev.cur())    #切换下一个</div><div class="line">dev.prev(which = dev.cur())    #切换前一个</div><div class="line">dev.off(which = dev.cur())     #关闭当前</div><div class="line">dev.set(which = dev.next())    #切换Active焦点</div><div class="line">graphics.off()                 #关闭所有绘图设备</div></pre></td></tr></table></figure>
+</li>
+<li><p>在同一图形窗口设置布局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout(matrix(c(1,1,2,1,1,2,3,4,5),3,3, byrow = TRUE ))</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="ggplot2绘图"><a href="#ggplot2绘图" class="headerlink" title="ggplot2绘图"></a>ggplot2绘图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">require(ggplot2)</div><div class="line">data(iris)</div><div class="line">set.seed(42)</div><div class="line">small &lt;- iris[sample(nrow(iris), 100), ]</div><div class="line">head(small)</div><div class="line">summary(small)</div><div class="line">p &lt;- ggplot(data = small, mapping = aes(x=Sepal.Width, y=Petal.Length))</div><div class="line">#上面这行代码把数据映射XY坐标轴上，需要告诉ggplot2，这些数据要映射成什么样的几何对象，下面以散点为例：</div><div class="line">p + geom_point()</div><div class="line"></div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Sepal.Width, y=Petal.Length, colour=Species, shape=Species))</div><div class="line">p + geom_point()</div><div class="line"></div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Sepal.Width, y=Petal.Length, colour=Petal.Width, shape=Species))</div><div class="line">p + geom_point()</div><div class="line"></div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Sepal.Width, y=Petal.Length, colour=Species, shape=Species))</div><div class="line">p + geom_point() + facet_wrap(~Species)</div><div class="line"></div><div class="line">#分面</div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Sepal.Width, y=Petal.Length, colour=Petal.Width, shape=Species))</div><div class="line">p + geom_point() + facet_wrap(~Species)</div><div class="line"></div><div class="line">#大小</div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Sepal.Width, y=Petal.Length, size=Petal.Width, colour=Species, shape=Species))</div><div class="line">p + geom_point()</div><div class="line"></div><div class="line"></div><div class="line">p &lt;- ggplot(data=small, mapping=aes(x=Petal.Width, y=Petal.Length, size=Sepal.Width, colour=Species, shape=Species))</div><div class="line">p + geom_point() + ggtitle(&apos;Petal.Length vs. Petal.Width&apos;)</div><div class="line"></div><div class="line">#多行注释</div><div class="line">if(FALSE) &#123;</div><div class="line">#	官方文档      http://docs.ggplot2.org/current/</div><div class="line">#	ggtitle()	  设置标题</div><div class="line">#	geom_smooth() 添加loess平滑曲线</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用lattice绘图"><a href="#使用lattice绘图" class="headerlink" title="使用lattice绘图"></a>使用lattice绘图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">library(lattice)</div><div class="line">xyplot(Petal.Length ~ Petal.Width, data = iris, groups = Species, auto.key=list(corner=c(0.95,0.05)))</div></pre></td></tr></table></figure>
+<p>下面用ggplot2包内带的汽车测试数据（mpg）来举个例子，用到的三个变量分别是发动机容量(displ)、高速公路上的每加仑行驶里数(hwy)、汽缸数目(cyl)。<br>首先加载ggplot2包，然后用ggplot定义第一层即数据来源。<br>其中aes参数非常关键，它将displ映射到X轴，将hwy映射到Y轴，将cyl变为分类数据后映射为不同的颜色。<br>然后使用+号添加了两个新的图层，第二层是加上了散点，第三层是加上了loess平滑曲线。</p>
+<h2 id="探索鸢尾花数据集"><a href="#探索鸢尾花数据集" class="headerlink" title="探索鸢尾花数据集"></a>探索鸢尾花数据集</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">head(iris)                     #查看前6行数据</div><div class="line">tail(iris)                     #查看最后6行数据</div><div class="line"></div><div class="line">rm(list = ls())                #清除所有变量</div><div class="line">data(iris)                     #加载iris数据集</div><div class="line">attach(iris)                   #把数据集添加到R搜索路径里面,</div><div class="line">                               #这意味着当评估一个变量时数据集能够被R搜索到,</div><div class="line">                               #因此这个数据集的对象能够通过它们简单的名字就可以获得</div><div class="line">detach(iris)                   #把已经添加到R搜索路径里面的数据集移除</div><div class="line">subdata &lt;- iris[iris$Species != &apos;virginica&apos;,]</div><div class="line">subdata$Species &lt;- factor(subdata$Species)</div><div class="line">library(e1071)                 #加载额e1071包</div><div class="line">model1 &lt;- svm(Species ~ Petal.Length + Petal.Width, data = subdata)</div><div class="line">plot(model1, subdata, Petal.Length ~ Petal.Width)</div><div class="line"></div><div class="line">model2 &lt;- svm(Species ~ ., data = iris)</div></pre></td></tr></table></figure>
+<h2 id="使用rmarkdown创建动态报告"><a href="#使用rmarkdown创建动态报告" class="headerlink" title="使用rmarkdown创建动态报告"></a>使用rmarkdown创建动态报告</h2><ul>
+<li><p>创建HTML文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#library(rmarkdown)                       #载入包</div><div class="line">#setwd(&quot;D:/Dev/R&quot;)                        #修改当前的工作目录</div><div class="line">#render(&quot;r_basic.Rmd&quot;,&quot;html_document&quot;)    #渲染页面</div></pre></td></tr></table></figure>
+</li>
+<li><p>报错处理</p>
+<ul>
+<li>pandoc未安装错误<br>错误: pandoc version 1.12.3 or higher is required and was not found (see the help page ?rmarkdown::pandoc_available)<br>安装pandoc(<a href="https://github.com/jgm/pandoc/releases/tag/1.19.1" target="_blank" rel="external">https://github.com/jgm/pandoc/releases/tag/1.19.1</a>)<br>使用<code>sessionInfo()</code>查看会话参数,查看已载入的包<br>使用<code>Sys.getenv()</code> 在元数据中发现没有RSTUDIO_PANDOC这个环境变量<br><code>Sys.setenv(RSTUDIO_PANDOC=&quot;C:/Program Files (x86)/Pandoc&quot;)</code><br>设置好环境变量后,再次运行render就可以渲染了<br><a href="http://stackoverflow.com/questions/28432607/pandoc-version-1-12-3-or-higher-is-required-and-was-not-found-r-shiny/29710643#29710643" target="_blank" rel="external">http://stackoverflow.com/questions/28432607/pandoc-version-1-12-3-or-higher-is-required-and-was-not-found-r-shiny/29710643#29710643</a></li>
+<li>中文乱码<br>确保*.Rmd文件编码为936 (ANSI/OEM - 简体中文 GBK)<br>文件换行符UNIX/DOS都可以<br>非gbk编码将导致输出HTML中文乱码(utf-8也会报错,注意!)</li>
+</ul>
+</li>
+</ul>
+
+	
+	
+	
+	
+</div>
+
+				
+
+                <!-- Post Comments -->
+                
+                    
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2016/12/20/hello-world/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Liang3p's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        liang3p@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">2</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;Instore.top</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
