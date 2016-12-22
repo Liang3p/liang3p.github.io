@@ -64,6 +64,30 @@ a {
     font-weight: 300
 }
 
+#hover_qrcode_ul {
+	width:160px;
+	height:160px;
+	margin:0px auto;
+	padding:0px;
+	background:transparent url(/img/logo.jpg) no-repeat 160px 160px;
+	background-position: 0 0;
+	background-size: contain;
+}
+#hover_qrcode_ul li {
+	list-style-type:none;
+}
+#hover_qrcode {
+	display:block;
+	width:160px;
+	height:160px;
+	text-decoration:none;
+	background:transparent url(/img/qrcode.png) no-repeat 160px 160px;
+	background-size: contain;
+}
+a#hover_qrcode:hover {
+	background-position: 0 0;
+}
+
 /****************/
 /* Local_Search */
 /****************/
