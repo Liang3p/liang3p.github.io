@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        FS-LDM金融业逻辑数据模型介绍 | instore.top | Learn More, Share More.
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Liang3p">
+    <meta name="description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="instore.top | Learn More, Share More.">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://instore.top">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="FS-LDM金融业逻辑数据模型介绍 | instore.top | Learn More, Share More.">
+    <meta property="og:description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主题域"><span class="post-toc-number">2.</span> <span class="post-toc-text">主题域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Party-当事人"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Party(当事人)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例"><span class="post-toc-number">2.1.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Internal-Org-内部组织"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Internal Org(内部组织)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-1"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-1"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-1"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-1"><span class="post-toc-number">2.2.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Product-产品"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Product(产品)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-2"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-2"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-2"><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-2"><span class="post-toc-number">2.3.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Agreement-协议"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Agreement(协议)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-3"><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-3"><span class="post-toc-number">2.4.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-3"><span class="post-toc-number">2.4.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-3"><span class="post-toc-number">2.4.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Asset-资产"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Asset(资产)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-4"><span class="post-toc-number">2.5.1.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-4"><span class="post-toc-number">2.5.2.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-4"><span class="post-toc-number">2.5.3.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Location-地域"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">Location(地域)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-4"><span class="post-toc-number">2.6.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-5"><span class="post-toc-number">2.6.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-5"><span class="post-toc-number">2.6.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-5"><span class="post-toc-number">2.6.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Event-事件"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">Event(事件)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-5"><span class="post-toc-number">2.7.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-6"><span class="post-toc-number">2.7.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-6"><span class="post-toc-number">2.7.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-6"><span class="post-toc-number">2.7.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Campaign-营销活动"><span class="post-toc-number">2.8.</span> <span class="post-toc-text">Campaign(营销活动)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-6"><span class="post-toc-number">2.8.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-7"><span class="post-toc-number">2.8.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-7"><span class="post-toc-number">2.8.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-7"><span class="post-toc-number">2.8.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Channel-渠道"><span class="post-toc-number">2.9.</span> <span class="post-toc-text">Channel(渠道)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-7"><span class="post-toc-number">2.9.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#业务规则-8"><span class="post-toc-number">2.9.2.</span> <span class="post-toc-text">业务规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-8"><span class="post-toc-number">2.9.3.</span> <span class="post-toc-text">关键实体和关系</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建模实例-8"><span class="post-toc-number">2.9.4.</span> <span class="post-toc-text">建模实例</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Finance-财务"><span class="post-toc-number">2.10.</span> <span class="post-toc-text">Finance(财务)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主题域特点-8"><span class="post-toc-number">2.10.1.</span> <span class="post-toc-text">主题域特点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关键实体和关系-9"><span class="post-toc-number">2.10.2.</span> <span class="post-toc-text">关键实体和关系</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用实例"><span class="post-toc-number">3.</span> <span class="post-toc-text">应用实例</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+
+<!-- header_home -->
+
+<!-- header_home -->
+<div class="material-index mdl-grid" style="margin-top: -145px;padding-left: 10px;padding-bottom: 80px;">
+    <a href="/">
+        <img src="/img/instore.top.png" alt="logo" />
+    </a>
+</div>
+
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            FS-LDM金融业逻辑数据模型介绍
+        </p>
+    </div>
+
+	
+
+
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Liang3p</strong>
+        <span>12月 31, 2016</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/数据仓库/">数据仓库</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据建模/">数据建模</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/行业应用/">行业应用</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=FS-LDM金融业逻辑数据模型介绍&url=http://instore.top//2016/12/31/FS-LDM金融业逻辑数据模型介绍/index.html&via=Liang3p" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://instore.top//2016/12/31/FS-LDM金融业逻辑数据模型介绍/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=FS-LDM金融业逻辑数据模型介绍&url=http://instore.top//2016/12/31/FS-LDM金融业逻辑数据模型介绍/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>本文简要介绍了FS-LDM的特点、主题域、主题域特点、业务规则，以及相关建模实例。文章可以为学习FS-LDM提供参考。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>FS-LDM的全程是Teradata Financial Services Logical Data Model,是Teradata自1996年发布并维护的针对金融业的逻辑数据模型产品。</p>
+<p><strong>FS-LDM产品特点</strong></p>
+<ul>
+<li>集成性：涉及范围广：支撑金融企业广泛的业务，如零售银行、公司业务、保险、信用卡、证券经纪、电子商务等，满足混业经营的需要。</li>
+<li>灵活性：是一个满足第三范式的数据模型，与操作系统、数据库系统和物理平台无关，能够最大限度地控制数据冗余，并保证足够的灵活性。</li>
+<li>扩展性：经得住时间的考验，在业务改变时，尽量小改动模型，甚至不做任何改动就可以适应这种变化。</li>
+<li>稳定性：自1996年至今，模型已经过多个版本变更，目前最新版7.0是在新巴赛尔协议数据需求驱动下的完善和增强，但是基本结构和核心都未曾改变。</li>
+<li>可实施性：模型产品配备了丰富的说明和文档，包括样本表、实体和属性的定义，业务规则，以及逻辑视图等，实用性和可操作性强，易于客户化。</li>
+<li>风险小：该模型已经被全球范围内多家金融机构建设数据仓库系统所使用，模型本身体现了在很多项目中成功实施的经验结晶，可以节省时间，从而降低费用。</li>
+<li>应用中性：不针对特别的应用或功能设计，能最大程度适应将来业务的扩展和变化。</li>
+</ul>
+<p><strong>FS-LDM的不同级别</strong></p>
+<blockquote>
+<p><strong>主题域</strong>：第一级,包含10个主题域</p>
+<blockquote>
+<p><strong>概念</strong>：第二级,包含50多个实体</p>
+<blockquote>
+<p><strong>细节</strong>：第三级,包含1181个实体,包含4838个属性</p>
+<blockquote>
+<p><strong>逻辑视图</strong>：第四级,包含200多个逻辑视图</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>逻辑数据模型示例</strong><br>数据模型是严格定义的一组概念的集合,精确地描述了系统的静态特征（数据结构）、动态特征（数据操作）和完整性约束条件，这就是数据模型的三要素。下图描述了逻辑模型的静态特征和完整性约束条件。<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148291799289.png" alt=""></p>
+<p><strong>FS-LDM主题域概览</strong><br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148291799358.png" alt=""></p>
+<h2 id="主题域"><a href="#主题域" class="headerlink" title="主题域"></a>主题域</h2><h3 id="Party-当事人"><a href="#Party-当事人" class="headerlink" title="Party(当事人)"></a>Party(当事人)</h3><p><strong>定义</strong>：An Individual or Group of Individuals.<br><strong>实例</strong>：Customers, prospects, vendors, employees, obligors, preferences, demographics.<br><strong>当事人指银行所服务的任意对象和感兴趣进行分析的各种对象。</strong>如个人或公司客户、潜在客户、代理机构、雇员、分行、部门等。一个PARTY可以同时是这当中许多种角色。</p>
+<h4 id="主题域特点"><a href="#主题域特点" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>该主题除了要存放各种基本信息之外，还可以存储当事人所拥有的固有资产类信息；</li>
+<li>当事人和其他多个主题之间（账户、内部机构等）存在密切的关联；</li>
+<li>建立银行客户的单一视图；</li>
+<li>实现基于客户基本信息的分析；</li>
+<li>为进行全面的客户关系管理和市场营销奠定基础；</li>
+</ul>
+<h4 id="业务规则"><a href="#业务规则" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>银行可能对多种的形式的当事人进行分析；</li>
+<li>一个当事人可能是机构、团体、个人；</li>
+<li>一个机构是由一些个人组成的，具有特定的商业或者某项专业的功能，可能是具有法人资格的，也有可能是非官方正式机构，也有可能是内部组织机构；</li>
+<li>一个团体也是由一些个人组成的，目的可能是出于个人或者家庭的需要；</li>
+<li>一个当事人可能会和很多其他当事人之间存在着各种关系，他也有可能是银行的潜在客户；</li>
+<li>一个当事人可能位于某个地址，但是同时由于不同的用途使用不同的地理位置信息；</li>
+</ul>
+<h4 id="关键实体和关系"><a href="#关键实体和关系" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><ul>
+<li><p><strong>实体</strong><br>当事人<br>机构<br>个人<br>潜在客户信息<br>客户资产信息<br>信用评级评分信息<br>名称信息<br>……</p>
+</li>
+<li><p><strong>关系</strong><br>当事人之间的关系<br>当事人和账户的关系<br>当事人和产品的关系<br>当事人和事件的关系<br>当事人和地址的关系<br>……</p>
+</li>
+</ul>
+<h4 id="建模实例"><a href="#建模实例" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>A Party is which of the following: an individual, an organization, a branch?<br>All 3- individual, organization and branch</li>
+<li>A Household is a Party<br>True</li>
+<li>If an individual is both a customer and an employee, how many instances of Party are there?<br>1</li>
+<li><p>Anny和Tom是夫妻，他们共同创建了一家Gold-Point的公司（Tom是法人代表），都是金融机构的客户。这对夫妇是DINK一族，年收入约200万。</p>
+<p><strong>PARTY</strong></p>
+<ul>
+<li>Gold-Point</li>
+<li>Anny</li>
+<li>Tom</li>
+<li>Household(A&amp;T)</li>
+</ul>
+<p><strong>ORGANIZATION</strong></p>
+<ul>
+<li>Gold-Point</li>
+</ul>
+<p><strong>EXTERNAL ORGANIZATION</strong></p>
+<ul>
+<li>Gold-Point</li>
+</ul>
+<p><strong>BUSINESS</strong></p>
+<ul>
+<li>Gold-Point</li>
+</ul>
+<p><strong>INDIVIDUAL</strong></p>
+<ul>
+<li>Anny</li>
+<li>Tom</li>
+</ul>
+<p><strong>HOUSEHOLD</strong></p>
+<ul>
+<li>Household(A&amp;T)</li>
+</ul>
+<p><strong>PARTYS_RELATIONSHIP</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>PARTY</th>
+<th>PARTY</th>
+<th>RELATIONSHIP</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anny</td>
+<td>Tom</td>
+<td>Wife</td>
+<td>Husband-Wife</td>
+</tr>
+<tr>
+<td>Tom</td>
+<td>Anny</td>
+<td>Husband</td>
+<td>Husband-Wife</td>
+</tr>
+<tr>
+<td>Tom</td>
+<td>Gold-Point</td>
+<td>Juristic</td>
+<td>Company-Juristic</td>
+</tr>
+<tr>
+<td>Gold-Point</td>
+<td>Tom</td>
+<td>Company</td>
+<td>Company-Juristic</td>
+</tr>
+<tr>
+<td>Household</td>
+<td>Anny</td>
+<td>Household</td>
+<td>Household-Member</td>
+</tr>
+<tr>
+<td>Household</td>
+<td>Tom</td>
+<td>Household</td>
+<td>Household-Member</td>
+</tr>
+<tr>
+<td>Anny</td>
+<td>Household</td>
+<td>Member</td>
+<td>Household-Member</td>
+</tr>
+<tr>
+<td>Tom</td>
+<td>Household</td>
+<td>Member</td>
+<td>Household-Member</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PARTY</th>
+<th>DEMOGRAPHIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household</td>
+<td>Income 2M</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>INDIVIDUAL NAME</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anny</td>
+<td>Legal name</td>
+</tr>
+<tr>
+<td>Tom</td>
+<td>Legal name</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ORGANIZATION NAME</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gold-Point</td>
+<td>Legal name</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PARTY GROUP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DINK</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PARTY</th>
+<th>PARTY</th>
+<th>GROUP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Option 1</td>
+<td>Anny</td>
+<td>DINK</td>
+</tr>
+<tr>
+<td>Option 1</td>
+<td>Tom</td>
+<td>DINK</td>
+</tr>
+<tr>
+<td>Option 2</td>
+<td>Household</td>
+<td>DINK</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Internal-Org-内部组织"><a href="#Internal-Org-内部组织" class="headerlink" title="Internal Org(内部组织)"></a>Internal Org(内部组织)</h3><p><strong>定义</strong>：A Party that is a unit of business.<br><strong>实例</strong>: branches, regions, departments, subsidiaries, teams.<br><strong>内部组织指的是金融机构或保险公司的内部的业务单元。</strong>它可能是银行内部的组织机构（如分行、支行、网点、部门等），也可能是任何一个法人机构当事人的内部组织，严格意义上这些也是一种特殊的PARTY。</p>
+<h4 id="主题域特点-1"><a href="#主题域特点-1" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>是一种特殊的PARTY（技术上）</li>
+<li>包括所有的组织类型</li>
+<li>体现内部机构之间复杂的关系</li>
+<li>提供层次和矩阵结构</li>
+<li>不仅包含自身的内部组织机构，还包括其他的内部组织</li>
+<li>和多个主题有关联</li>
+</ul>
+<h4 id="业务规则-1"><a href="#业务规则-1" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>内部组织机构可能是银行内部的组织机构，也有可能是任何一个法人机构当事人的内部组织；</li>
+<li>“员工”是内部组织机构中的一部分，他们可以是一个正式机构的成员，也有可能会组成一些具有特定功能的团队；</li>
+<li>通过PARTY_PARTY_RELATION可以体现内部机构之间灵活的关系；</li>
+<li>一个金融机构的内部组织的职责可能是开发、管理、市场、销售某类产品或者提供某种服务等；</li>
+<li>一个内部组织机构对一种产品而言，可能有多种角色，如创建、销售、监控等；同样的，内部组织机构对于账户、潜在客户等也都有不同的角色；</li>
+<li>一个内部组织机构可以覆盖多个地区；</li>
+</ul>
+<h4 id="关键实体和关系-1"><a href="#关键实体和关系-1" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><ul>
+<li><p><strong>实体</strong><br>内部机构<br>金融机构内部组织机构<br>内部组织机构的职能以及营业时间等<br>内部组织机构的目标<br>内部组织机构的收入、成本和利润等<br>内部组织机构和员工的关系<br>员工的职责信息表</p>
+</li>
+<li><p><strong>关系</strong><br>内部机构之间的关系</p>
+</li>
+</ul>
+<h4 id="建模实例-1"><a href="#建模实例-1" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>Give some examples of Parties that are Internal Organizations<br>Branch, team, department</li>
+<li>Are internal organizations limited to your financial institution?<br>No – they can be any organization within any organization</li>
+<li><p>金融机构的总行为BANK-HQ,一家省行为A-Branch<br><strong>PARTY</strong></p>
+<ul>
+<li>BANK-HQ</li>
+<li>A-Branch</li>
+</ul>
+<p><strong>ORGANIZATION</strong></p>
+<ul>
+<li>BANK-HQ</li>
+<li><p>A-Branch</p>
+<p><strong>EXTERNAL ORGANIZATION</strong></p>
+</li>
+<li>BANK-HQ</li>
+</ul>
+<p><strong>BUSINESS</strong></p>
+<ul>
+<li>BANK-HQ</li>
+</ul>
+<p><strong>FINANCIAL INSTITUTION</strong></p>
+<ul>
+<li>BANK-HQ</li>
+</ul>
+<p><strong>INTERNAL ORGANIZATION</strong></p>
+<ul>
+<li>A-Branch</li>
+</ul>
+<p><strong>FINANCIAL INST INT ORG</strong></p>
+<ul>
+<li>A-Branch</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>PARTY</th>
+<th>PARTY</th>
+<th>RELATIONSHIP</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BANK-HQ</td>
+<td>A-Branch</td>
+<td>HQ</td>
+<td>HQ-Branch</td>
+</tr>
+<tr>
+<td>A-Branch</td>
+<td>BANK-HQ</td>
+<td>Branch</td>
+<td>HQ-Branch</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PARTY</th>
+<th>ORGANIZATION LEVEL</th>
+<th>LEVEL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BANK-HQ</td>
+<td>Org Management</td>
+<td>HQ</td>
+</tr>
+<tr>
+<td>A-Branch</td>
+<td>Org Management</td>
+<td>Prov-Branch</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Product-产品"><a href="#Product-产品" class="headerlink" title="Product(产品)"></a>Product(产品)</h3><p><strong>定义</strong>：Any marketable product or service including terms and conditions.<br><strong>实例</strong>: Product offerings, interest rates, penalties, term and limits, coverages<br><strong>产品是为拓展市场占有率，满足客户更广泛需求而制定的可营销的交易品种的集合，产品是金融机构向用户销售的或提供给客户所使用的服务。</strong></p>
+<h4 id="主题域特点-2"><a href="#主题域特点-2" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>产品是金融机构销售或提供的可市场化的产品、产品包和服务。如果有必要，在模型中可以包括竞争对象所提供的产品。</li>
+<li>产品可以通过产品特征加以描述，产品特征是金融机构提供的所有可以应用于产品的有效产品特征。它标识了金融机构在提供产品时的限制或附加条件。在银行业的例子有手续费、期限、允许的展期和提前通知的要求等。</li>
+<li>产品与当事人、帐户之间都存在各种关系。</li>
+<li>为满足银行内部管理的需要和适应不断变化的业务需求，可以根据实际情况结合产品特性将产品分组，如个人存款产品组、公司贷款产品组等 ，这些即“产品组”。</li>
+<li>出于市场竞争的需要，或作为市场营销的结果，将一些产品打包、捆绑销售，称其为“产品包”。</li>
+</ul>
+<h4 id="业务规则-2"><a href="#业务规则-2" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>一个产品有一个命名和描述；</li>
+<li>一个产品可能是一个产品包的一部分；</li>
+<li>一个产品被若干个产品特征（feature）所描述；</li>
+<li>一个产品特征可以应用于若干个产品；</li>
+<li>产品可以被划分成产品组（group）；</li>
+<li>一个当事人可以针对一个产品或产品包充当若干角色；</li>
+<li>产品和产品的特征可以随着地区的不同而有所差异；</li>
+</ul>
+<h4 id="关键实体和关系-2"><a href="#关键实体和关系-2" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><ul>
+<li><p><strong>实体</strong><br>产品<br>产品包<br>产品组<br>产品特征<br>产品 / 当事人<br>产品 / 产品包<br>产品 / 产品组<br>产品 / 产品特征<br>产品包 / 产品特征<br>产品 / 地理区域<br>产品特征 / 地理区域<br>……</p>
+</li>
+<li><p><strong>关系</strong><br>产品 – 当事人关系<br>产品 – 产品包关系<br>产品 – 产品组关系<br>产品 – 产品特征关系<br>产品包 – 产品特征关系<br>产品 – 地理区域关系<br>产品特征 -地理区域关系<br>……</p>
+</li>
+</ul>
+<h4 id="建模实例-2"><a href="#建模实例-2" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>How does a Package differ from a Product Grouping?<br>A Package is more than one product that when combined form a new offering for customers to buy. A Product Grouping is a group of products for internal analysis purposes. Product Groups are NOT offerings for customers to buy.</li>
+<li>Give some examples of products<br>Checking Account, Time Deposit, 30 year fixed rate mortgage</li>
+<li><p>金融机构有一种20年期房贷产品Mortgage，利率6.5%(固定); 同时还有 一种同期限的房屋保险产品Insurance，保险费率1.5%。<br><strong>PRODUCT</strong></p>
+<ul>
+<li>Mortgage</li>
+<li>Insurance</li>
+</ul>
+<p><strong>BANKING PRODUCT</strong></p>
+<ul>
+<li>Mortgage</li>
+</ul>
+<p><strong>INSURANCE PRODUCT</strong></p>
+<ul>
+<li>Insurance</li>
+</ul>
+<p><strong>INDIVIDUAL</strong></p>
+<ul>
+<li>Mortgage</li>
+</ul>
+<p><strong>OFFERING</strong></p>
+<ul>
+<li>Insurance</li>
+</ul>
+<p><strong>FEATURE</strong></p>
+<ul>
+<li>6.5%</li>
+<li>1.5%</li>
+<li>20 Year</li>
+</ul>
+<p><strong>TERM FEATURE</strong></p>
+<ul>
+<li>20 Year</li>
+</ul>
+<p><strong>RATE FEATURE</strong></p>
+<ul>
+<li>6.5%</li>
+<li>1.5%</li>
+</ul>
+<p><strong>FIXED INTEREST RATE FEATURE</strong></p>
+<ul>
+<li>6.5%</li>
+</ul>
+<p><strong>PRODUCT FEATURE</strong></p>
+<p>|PRODUCT |PRODUCT FEATURE|FEATURE TYPE|<br>|-|-|-|<br>|Mortgage| 20 Year| Mandatory Features|<br>|Mortgage| 6.5%| Mandatory Features|<br>|Insurance| 20 Year| Mandatory Features|<br>|Insurance| 1.5%| Mandatory Features|</p>
+</li>
+</ul>
+<h3 id="Agreement-协议"><a href="#Agreement-协议" class="headerlink" title="Agreement(协议)"></a>Agreement(协议)</h3><p><strong>定义</strong>：A contract or other kind of agreement of interest between Parties.<br><strong>实例</strong>: Checking account, commercial account, letter of credit, credit card, insurance policy, internal investments(活期存款账户、定期存款账户、养老金账户、信用卡、担保合同、贷款合同、内部投资账户、证券买卖账户、信用证、基金账户、保单……)<br><strong>协议是金融机构与当事人之间针对某种特定产品或服务而签立的契约关系。</strong>它可以是多样化的，如帐户、客户和银行签订的合同等。当金融机构与客户之间针对某种产品或服务的条款和条件达成协议时，一个协议（AGREEMENT）就会被开立，因此协议是客户和银行往来的重要载体。</p>
+<h4 id="主题域特点-3"><a href="#主题域特点-3" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>AGREEMENT是金融机构与客户之间针对某种特定产品或服务而签立的契约关系。例如银行的帐户，保险公司的保单。</li>
+<li>包括AGREEMENT的申请、报价、还价以及开立等完整信息。</li>
+<li>建立AGREEMENT 、当事人、产品主题之间的关系，识别持有某种产品客户的特征，寻找具有相似特征的潜在客户销售相同的产品，实现交叉销售。</li>
+<li>AGREEMENT主题与事件主题和内部机构主题也有密切的联系。</li>
+</ul>
+<h4 id="业务规则-3"><a href="#业务规则-3" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>当金融机构与客户之间针对某种产品或服务的条款和条件达成协议时， 一个AGREEMENT就会被开立。</li>
+<li>在一个时间点，一个AGREEMENT只能对应一种产品，该产品可能是一个产品包的一部分。</li>
+<li>AGREEMENT可能是客户接受金融机构关于某项产品报价的结果。</li>
+<li>一个AGREEMENT可以被一个或多个当事人持有。如一个帐户可以有多个当事人一起持有， 帐户持有人是当事人对AGREEMENT的角色，多个当事人共同使用一个帐户时，必须开立联名户。</li>
+<li>一个AGREEMENT除了持有人外，可能与其他的当事人有关系，如受益人、共同签字人、担保人等，这些也是当事人对AGREEMENT的角色。</li>
+<li>AGREEMENT也可能与其他AGREEMENT相关联，如一个帐户由于筹措资金的需要而被另一个帐户所取代，或一个帐户对另一个帐户提供担保。</li>
+</ul>
+<h4 id="关键实体和关系-3"><a href="#关键实体和关系-3" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><ul>
+<li><p><strong>实体</strong><br>帐户<br>帐户分类<br>帐户自动支付<br>帐户特性<br>帐户申请<br>帐户报价<br>帐户和卡<br>帐户滥用历史<br>帐户涉案历史<br>帐户评分和等级</p>
+</li>
+<li><p><strong>关系</strong><br>帐户/产品关系<br>帐户/特性关系<br>帐户/帐户关系<br>当事人/帐户关系<br>帐户/资产关系<br>帐户/地址关系</p>
+</li>
+</ul>
+<h4 id="建模实例-3"><a href="#建模实例-3" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>What are some examples of agreements?<br>Checking account, mortgage, automobile insurance policy, collateral agreement</li>
+<li>What are various roles that parties can have with agreements?<br>Obligor, beneficiary, named insured, guarantor</li>
+<li><p>Ariel在该金融机构开立了20年期的房屋贷款Loan1（迄今为止贷款余额 为67.5万），采用本息等额还款方式。同时使用她的存款帐户saving1每 个月进行房贷的自动还款。<br><strong>AGREEMENT</strong></p>
+<ul>
+<li>Loan1</li>
+<li>saving1</li>
+</ul>
+<p><strong>FINANCIAL AGREEMENT</strong></p>
+<ul>
+<li>Loan1</li>
+<li>Saving1</li>
+</ul>
+<p><strong>CREDIT AGREEMENT</strong></p>
+<ul>
+<li>Loan1</li>
+</ul>
+<p><strong>LOAN ACCOUNT</strong></p>
+<ul>
+<li>Loan1</li>
+</ul>
+<p><strong>LOAN TERM ACCOUNT</strong></p>
+<ul>
+<li>Loan1</li>
+</ul>
+<p><strong>CASH MANAGEMENT</strong></p>
+<ul>
+<li>saving1</li>
+</ul>
+<p><strong>DEPOSIT ACCOUNT</strong></p>
+<ul>
+<li>saving1</li>
+</ul>
+<p><strong>DEPOSIT TRANSACTION ACCT</strong></p>
+<ul>
+<li>saving1</li>
+</ul>
+<p><strong>ACCT RELATIONSHIP HIS</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>ACCT</th>
+<th>RELATIONSHIP</th>
+<th>ACCT_RELATION_TYPE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loan1</td>
+<td>saving1</td>
+<td>Auto payment from-to</td>
+<td>Auto payment to</td>
+</tr>
+<tr>
+<td>saving1</td>
+<td>Loan1</td>
+<td>Auto payment from-to</td>
+<td>Auto payment from</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>ACCOUNT BALANCE SUMMARY DD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loan1</td>
+<td>675,000</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>INTERNAL STANDING ORDER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>saving1</td>
+<td>Loan1</td>
+</tr>
+</tbody>
+</table>
+<p>  <strong>ACCOUNT PRODUCT HISTORY</strong></p>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>PRODUCT</th>
+<th>STATUS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loan1</td>
+<td>Loan Product</td>
+<td>is offered product</td>
+</tr>
+<tr>
+<td>saving1</td>
+<td>Saving Product</td>
+<td>is offered product</td>
+</tr>
+</tbody>
+</table>
+<p>  <strong>ACCOUNT PARTY</strong></p>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>PTY</th>
+<th>RELATION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ariel</td>
+<td>Loan1</td>
+<td>account holder</td>
+</tr>
+<tr>
+<td>Ariel</td>
+<td>Saving1</td>
+<td>account holder</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Asset-资产"><a href="#Asset-资产" class="headerlink" title="Asset(资产)"></a>Asset(资产)</h3><p><strong>定义</strong>：Things Parties have an interest in that have value.<br><strong>实例</strong>: Customer asset information - real estate, automobiles, jewelry<br><strong>资产是可能采集到的客户的资产（负债）信息，也包括银行向外租赁的资产信息。</strong>这些信息的来源很多情况下是在客户申请贷款时所提供的各种担保品信息、抵质押品信息等。</p>
+<h4 id="业务规则-4"><a href="#业务规则-4" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>唯一标识号</li>
+<li>保险历史种类代码，如是否被拒保、拒赔？</li>
+<li>所在地址编号</li>
+<li>资产种类代码</li>
+<li>资产图片资料等的编号</li>
+<li>资产的描述</li>
+<li>持有人为该资产指定的账号</li>
+</ul>
+<h4 id="关键实体和关系-4"><a href="#关键实体和关系-4" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><ul>
+<li><p><strong>实体</strong><br>资产</p>
+</li>
+<li><p><strong>关系</strong><br>当事人和资产的关系<br>协议和资产的关系</p>
+</li>
+</ul>
+<h4 id="建模实例-4"><a href="#建模实例-4" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>Give some examples of assets<br>real estate, automobile, cash deposit at another institution</li>
+<li>Can party’s debt be described in party asset area?<br>Yes. If party owe money for the asset and this debt is with another institution, then this debt can be described as Liability.</li>
+<li><p>Teradata公司的员工Ariel三年前购入了一套价值100万的房子，目前估计价值125万。</p>
+<p><strong>PARTY ASSET</strong></p>
+<ul>
+<li>apartment</li>
+</ul>
+<p><strong>REAL ESTATE</strong></p>
+<ul>
+<li>apartment</li>
+</ul>
+<p><strong>PARTY TO PARTY ASSET</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>PTY</th>
+<th>ASSET</th>
+<th>RELATION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ariel</td>
+<td>apartment</td>
+<td>owner</td>
+</tr>
+</tbody>
+</table>
+<p>  <strong>ASSET VALUE HIST</strong></p>
+<table>
+<thead>
+<tr>
+<th>ASSET</th>
+<th>ASSET-TYPE</th>
+<th>VALUE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apartment</td>
+<td>Purchase Price</td>
+<td>1M</td>
+</tr>
+<tr>
+<td>apartment</td>
+<td>Market value</td>
+<td>1.25M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Location-地域"><a href="#Location-地域" class="headerlink" title="Location(地域)"></a>Location(地域)</h3><p><strong>定义</strong>：A geographical area, physical or electronic address.<br><strong>实例</strong>: street address, electronic address, city, state, postal code, country.<br><strong>地址区域是希望观察和分析的任何区域，既包括传统类型的地址信息（如国家、地区、城市、区县、街道等），又包括如电话信息、邮箱、黄页等电子地址信息。</strong></p>
+<h4 id="主题域特点-4"><a href="#主题域特点-4" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>LOCATION主题包含“具体地址”、“地区”、“地理位置”等不同层次的信息。</li>
+<li>该主题和事件、产品、渠道、内部组织机构、营销活动等主题都有着密切的联系。</li>
+</ul>
+<h4 id="业务规则-5"><a href="#业务规则-5" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>一个地址可能是物理地址、电子地址、电话、邮箱地址等；</li>
+<li>一个当事人可能有0～n个地址，这些地址又可以分成主地址、次选地址或者邮寄地址等；</li>
+<li>账户的对帐单可能需要寄送到某个地址；</li>
+<li>地区的定义可以根据银行不同目的进行设计，比如某项产品的销售区域或者某项评级的地区等；</li>
+<li>可以体现具体地址和地区之间的关联；</li>
+<li>内部组织机构可以覆盖多个地区；</li>
+</ul>
+<h4 id="关键实体和关系-5"><a href="#关键实体和关系-5" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><p><strong>实体</strong></p>
+<ul>
+<li>广义的地理位置</li>
+<li>地理位置的分类</li>
+</ul>
+<p><strong>关系</strong></p>
+<ul>
+<li>地理位置和内部机构的关系</li>
+<li>地理位置和产品的关系</li>
+<li>地理位置和营销活动的关系</li>
+<li>地理位置和账户（包括定价等）的关系</li>
+<li>地理位置和当事人的关系</li>
+<li>……</li>
+</ul>
+<h4 id="建模实例-5"><a href="#建模实例-5" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>What are some examples of contact points and which entity would contain them?<br>Street address, telephone number, e-mail address POINT LOCATOR entity</li>
+<li>Which entity allows a Party to have multiple locators?<br>PARTY TO LOCATOR entity</li>
+<li><p>Anny和Tom的家庭地址是“No 6 Street 10 ＃，LA”，他们的GoldPoint公司地址是“Capital Avenue 245＃, LA”，Anny习惯将信用卡 Card3(对应的账户为Card3_Acct)的对帐单寄到家里，但是Tom更喜欢 使用公司地址收取他的Card4(对应的账户为Card4_Acct)的对帐单。</p>
+<p><strong>LOCATOR</strong></p>
+<ul>
+<li>No 6 Street 10#, LA Capital Avenue 245#, LA</li>
+</ul>
+<p><strong>POINT LOCATOR</strong></p>
+<ul>
+<li>No 6 Street 10 #, LA Capital Avenue 245#, LA</li>
+</ul>
+<p><strong>STREET ADDRESS</strong></p>
+<ul>
+<li>No 6 Street 10 #, LA Capital Avenue 245#, LA</li>
+</ul>
+<p><strong>PARTY TO LOCATOR (Option 1)</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>PTY</th>
+<th>LOCATOR</th>
+<th>RELATIONSHIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household(A&amp;T)</td>
+<td>No 6 Street 10#, LA</td>
+<td>Home Address</td>
+</tr>
+<tr>
+<td>Gold-Point</td>
+<td>Capital Avenue 245#, LA</td>
+<td>Org Address</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Event-事件"><a href="#Event-事件" class="headerlink" title="Event(事件)"></a>Event(事件)</h3><p><strong>定义</strong>：Something that happened which may involve contact with the customer.<br><strong>实例</strong>: Deposit, withdrawal, loan payment, late fee, balance inquiry, address change, inquiries, web interactions<br><strong>事件是银行与客户或潜在客户之间的联系或交易活动，它记录了详细的行为和交易数据，包括存取款、收费、计息、咨询投诉、查询、市场调查、网上交易等。</strong>既可以与资金相关，也可以与资金无关；既可以有客户参与，也可以没有客户参与；既可以与帐户相关，也可以与帐户无关；可以由客户发起，也可以由银行发起。通过事件可以帮助了解哪些客户使用哪些渠道做哪种交易事件，交易金额多少、什么时间、在什么地点、与金融机构的哪位员工或部门打交道。</p>
+<h4 id="主题域特点-5"><a href="#主题域特点-5" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>Financial and non-financial events</li>
+<li>Customer or financial institution initiated</li>
+<li>Information about insurance claims and relationship to parties and policies.</li>
+<li>Automatic transactions (e.g. interest/fee charges)</li>
+<li>Events grouped into sessions - e.g internet session</li>
+<li>Event-related currency code - multi-currency environment</li>
+<li>Activity classifications</li>
+<li>May trigger journal vouchers (debit and credit)</li>
+<li>Related to Channel, Parties, other Events, Ledger, Campaign, and Agreements</li>
+</ul>
+<h4 id="业务规则-6"><a href="#业务规则-6" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>事件实体记录了银行的所有交互活动。</li>
+<li>这些事件可能与金钱相关，也可能与金钱无关。可能与帐户相关，也可能与帐户无关。</li>
+<li>事件属性中保留业务系统的交易码Transaction Id。</li>
+<li>事件包含存款、取款、查询、付款、利息入帐等交易，属性Event Activity Type Cd区别不同种类的事件活动。</li>
+<li>与事件相关的当事人记录在EVENT PARTY中，一个事件可能与多个当事人相关，包括引发事件的客户、联系客户的员工、处理事件的金融机构、购买事件的商户、提供电话服务的呼叫中心。</li>
+<li><p>客户与金融机构联系的渠道信息记录在CONTACT EVENT。</p>
+</li>
+<li><p>EVENT GROUP记录了对于金融机构来说具有某种特定含义的事件，如一个客户在同一台ATM上连续进行的查询余额、存款、转帐交易，以上三个交易将称为一个session而被包含进相同的EVENT GROUP。金融机构可为不同的目的对事件进行多种方式的分组。</p>
+</li>
+<li>EVENT GROUP ASSOC实体将事件和事件组进行关联，一个事件可能和很多事件组关联，一个事件组包含多个事件。</li>
+</ul>
+<h4 id="关键实体和关系-6"><a href="#关键实体和关系-6" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><p><strong>实体</strong></p>
+<ul>
+<li>事件</li>
+<li>事件活动种类</li>
+<li>事件关系</li>
+<li>事件成本</li>
+<li>事件分类</li>
+<li>事件产品关系</li>
+</ul>
+<p><strong>关系</strong></p>
+<ul>
+<li>事件—地区关系</li>
+<li>信用卡-购买、授权、结算</li>
+<li>催收和还款事件</li>
+</ul>
+<h4 id="建模实例-6"><a href="#建模实例-6" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>What are some examples of Events?<br>Deposit account withdrawal or deposit, loan payment, insurance payment, buy or sell of a security, campaign mailing, customer inquiry, web page view</li>
+<li>Do all Events involve direct customer contact?<br>No –withdrawal at ATM is indirect contact but not direct; interest payment is no contact</li>
+<li><p>Ariel通过柜台将2000元从她的储蓄账户saving1转帐到Howell 的储蓄账户saving2上。</p>
+<p><strong>EVENT</strong></p>
+<ul>
+<li>transferring 2000 from</li>
+<li>transferring 2000 to</li>
+</ul>
+<p><strong>FINANCIAL ACCOUNT EVENT</strong></p>
+<ul>
+<li>transferring 2000 from</li>
+<li>transferring 2000 to</li>
+</ul>
+<p><strong>FINANCIAL EVENT</strong></p>
+<ul>
+<li>transferring 2000 from</li>
+<li>transferring 2000 to</li>
+</ul>
+<p><strong>ACCOUNT EVENT</strong></p>
+<ul>
+<li>transferring 2000 from</li>
+<li>transferring 2000 to</li>
+</ul>
+<p><strong>CONTACT EVENT</strong></p>
+<ul>
+<li>transferring 2000 from</li>
+</ul>
+<p><strong>EVENT RELATIONSHIP</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>PTY1</th>
+<th>PTY2</th>
+<th>RELATION</th>
+<th>EVENT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transferring 2000 from</td>
+<td>transferring 2000 to</td>
+<td>Transfer from to</td>
+<td>Transfer from</td>
+</tr>
+<tr>
+<td>transferring 2000 to</td>
+<td>transferring 2000 from</td>
+<td>Transfer from to</td>
+<td>Transfer to</td>
+</tr>
+</tbody>
+</table>
+<p>  <strong>EVENT PARTY</strong></p>
+<table>
+<thead>
+<tr>
+<th>EVENT</th>
+<th>PTY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ariel</td>
+<td>transferring 2000 from</td>
+</tr>
+<tr>
+<td>Howell</td>
+<td>transferring 2000 to</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Campaign-营销活动"><a href="#Campaign-营销活动" class="headerlink" title="Campaign(营销活动)"></a>Campaign(营销活动)</h3><p><strong>定义</strong>：A communication plan to deliver a message.<br><strong>实例</strong>: Communication plans<br><strong>营销活动是为了获取、维护、增强银行与客户的关系而开展的一些促销的活动。</strong><br>营销活动是一些有组织的活动，其目的可以是为了把某些产品推向市场，也有可能是为了树立银行在市场上的形象；<br>完整的营销活动应该包括营销策略、营销行为以及营销活动的反馈信息；<br>收集营销活动的信息可以帮助银行发现最有效的营销方式，了解不同类型客户对营销活动的反馈；</p>
+<h4 id="主题域特点-6"><a href="#主题域特点-6" class="headerlink" title="主题域特点"></a>主题域特点</h4><p>Multiple levels of campaigns from strategy to execution<br>Multiple functions (Marketing &amp; Collection/Recovery)<br>Costs, revenues and dates<br>Mass, micro and targeted campaign<br>Advertisement message, offer and composition<br>Related to Channels, Customer Segments, Products, Events</p>
+<h4 id="业务规则-7"><a href="#业务规则-7" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>营销活动的策略可能是很多层次的；</li>
+<li>一个营销活动可能会导致实施一个或多个实际的促销事件；</li>
+<li>一个营销活动可以通过和其他主题的关系，实现一些特别的活动，如只针对某些地区（LOCATION）；只涉及某些产品（PRODUCT）、只在某些机构进行（内部组织机构）或者只和某类账户（ACCOUNT）相关；</li>
+<li>一些外部的市场信息（如市场细分等）可以服务一些特定的营销活动；</li>
+<li>高层营销策略会针对多种渠道设计，但是具体的一个营销事件只涉及一种渠道；</li>
+<li>营销事件的结果可能会导致开立一个账户；</li>
+<li>一个营销活动可能有多种优惠措施和条件；</li>
+</ul>
+<h4 id="关键实体和关系-7"><a href="#关键实体和关系-7" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><p><strong>实体</strong></p>
+<ul>
+<li>营销活动策略</li>
+<li>营销活动的分类</li>
+<li>营销活动事件</li>
+<li>目标营销</li>
+<li>营销活动的优惠条件</li>
+<li>营销活动的市场计划信息</li>
+<li>广告的放置</li>
+<li>广告活动的实施</li>
+</ul>
+<p><strong>关系</strong></p>
+<ul>
+<li>营销活动和账户的关系</li>
+<li>营销活动和内部机构的关系</li>
+<li>营销活动和产品、当事人的关系</li>
+<li>营销活动和location的关系</li>
+</ul>
+<h4 id="建模实例-7"><a href="#建模实例-7" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>What is the difference between the Campaign and Promotion entities?<br>A Campaign is at a higher level in the planning process than a Promotion.  A Campaign will lead to specific Promotions.  At the promotion level you know who you are targeting and how.</li>
+<li>Which entity tells me the parties targeted for a given promotion?<br>PROMOTION PARTY  or PARTY SEGMENT entities</li>
+<li><p>金融机构总行BANK-HQ市场部决定在全国开展一次关于房贷的促销活 动，配合提高产品知名度的市场营销策略。<br><strong>CAMPAIGN</strong></p>
+<ul>
+<li>提高产品知名度</li>
+</ul>
+<p><strong>PROMOTION</strong></p>
+<ul>
+<li>房贷促销</li>
+</ul>
+<p><strong>MASS PROMOTION</strong></p>
+<ul>
+<li>房贷促销</li>
+</ul>
+<p><strong>MASS PROMO CONTACT EVENT</strong></p>
+<ul>
+<li>房贷促销事件</li>
+</ul>
+<p><strong>CONTACT EVENT</strong></p>
+<ul>
+<li>房贷促销事件</li>
+</ul>
+<p><strong>CAMPAIGN PRODUCT</strong><br>提高产品知名度 房贷产品</p>
+<p><strong>CAMPAIGN PARTY</strong><br>提高产品知名度 BANK-HQ Marketing</p>
+<p><strong>CAMPAIGN TO LOCATOR</strong><br>提高产品知名度 Country</p>
+</li>
+</ul>
+<h3 id="Channel-渠道"><a href="#Channel-渠道" class="headerlink" title="Channel(渠道)"></a>Channel(渠道)</h3><p><strong>定义</strong>：The vehicle by which a party may interact with the Financial Institution/Insurance company.<br><strong>实例</strong>: Interaction channels - internet, phone, web.<br>描述的是当各种事件发生时，当事双方（主要是指客户和银行）进行交互和接触的手段及方法，通过它客户与银行进行接触、购买产品、使用服务并交流信息。</p>
+<h4 id="主题域特点-7"><a href="#主题域特点-7" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>Includes specific channel devices</li>
+<li>Multiple channel types</li>
+<li>Channel characteristics and capacities</li>
+<li>Related to Events, Parties and Campaigns</li>
+<li>实体CHANNEL标识了所有金融机构用来与用户进行销售或服务联系时所使用的渠道。</li>
+<li>一个渠道是用户用来接受有关金融机构或金融机构产品信息以及使用金融产品时的载体。</li>
+<li>在实体CHANNEL 中每一个特定的渠道都有一个ID号相对应。例如，一台ATM机有一个ID号，一个POS终端也有一个ID号。</li>
+<li>实体CHANNEL也包含了外部渠道。例如其他机构的ATM机器。</li>
+</ul>
+<h4 id="业务规则-8"><a href="#业务规则-8" class="headerlink" title="业务规则"></a>业务规则</h4><ul>
+<li>渠道分为若干类型，例如ATM渠道。</li>
+<li>当事人可以和渠道之间存在一种或多种关系，也可以不存在任何关系。</li>
+<li>一个帐户可以属于一个渠道或者通过一个渠道来进行管理。</li>
+<li>渠道有自己的一些相关信息，例如功能，特征或地理位置。</li>
+<li>一个渠道有其最大容量，例如每小时可以处理的业务笔数。</li>
+</ul>
+<h4 id="关键实体和关系-8"><a href="#关键实体和关系-8" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><p><strong>实体</strong></p>
+<ul>
+<li>渠道</li>
+<li>渠道类型</li>
+<li>当事人/渠道</li>
+<li>渠道/AGREEMENT</li>
+<li>渠道/渠道事件</li>
+<li>渠道成本</li>
+<li>渠道收益</li>
+<li>渠道事件</li>
+<li>渠道容量</li>
+<li>物理邮件</li>
+<li>ATM，POS，街亭，电子</li>
+<li>电话，柜面，电台</li>
+<li>电视，印刷，呼叫中心</li>
+</ul>
+<p><strong>关系</strong></p>
+<ul>
+<li>渠道 - 当事人</li>
+<li>渠道 - 帐户</li>
+<li>渠道 - 渠道事件</li>
+</ul>
+<h4 id="建模实例-8"><a href="#建模实例-8" class="headerlink" title="建模实例"></a>建模实例</h4><ul>
+<li>What are some examples of Channels?<br>ATM, call center, web site address</li>
+<li>How are channels used during an Event and which entity contains this relationship?<br>Channels are used as the vehicle for communication with parties. CONTACT EVENT entity links the communication Event to the Channel</li>
+<li><p>金融机构为客户提供了呼叫中心CC,网络银行NetB，ATM（12万台）， POS（3万），柜台（12500个）等多种服务渠道。</p>
+<p><strong>CHANNEL</strong></p>
+<ul>
+<li>CC</li>
+<li>NetB ATM(12万条)</li>
+<li>POS(3万条)</li>
+<li>OTC(12500条)</li>
+</ul>
+<p><strong>ELECTRONIC CHANNEL</strong></p>
+<ul>
+<li>NetB</li>
+</ul>
+<p><strong>CALL CENTER CHANNEL</strong></p>
+<ul>
+<li>CC</li>
+</ul>
+<p><strong>ATM CHANNEL</strong></p>
+<ul>
+<li>ATM(12万条)</li>
+</ul>
+<p><strong>POINT OF SALE CHANNEL</strong></p>
+<ul>
+<li>POS(3万条)</li>
+</ul>
+<p><strong>OVER THE COUNTER CHANNEL</strong></p>
+<ul>
+<li>OTC(12500条)</li>
+</ul>
+<p><strong>CHANNEL TYPE</strong></p>
+<ul>
+<li>CC</li>
+<li>ELECTRONIC</li>
+<li>POS</li>
+<li>ATM</li>
+<li>OTC</li>
+</ul>
+</li>
+</ul>
+<h3 id="Finance-财务"><a href="#Finance-财务" class="headerlink" title="Finance(财务)"></a>Finance(财务)</h3><p><strong>定义</strong>：The internal accounting of the business.<br><strong>实例</strong>: general ledger, journal vouchers<br>主要包括银行的总帐信息，是描述科目组织、控制、内部核算等银行核心科目帐务以及预算管理有关的内容。该主题抽象地描述了银行内部帐务的组织模式，能够适应不同的科目组织体系。</p>
+<h4 id="主题域特点-8"><a href="#主题域特点-8" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
+<li>Tracks General Ledger and Journal Voucher information</li>
+<li>GL Subtyping - Assets, Liabilities, Equity, Revenue and Expense</li>
+<li>GL Balance over time - for budget and actual</li>
+<li>Link to Transaction Event and customer Account/Policy<ul>
+<li>To provide for drill down from GL to Agreement and to transaction Event</li>
+<li>Example - if customer made a premium payment (Event) then this would result in  debit and credit journal vouchers posted to the ledgers.</li>
+</ul>
+</li>
+<li>Provides for flexibility in the GL numbering scheme.</li>
+</ul>
+<h4 id="关键实体和关系-9"><a href="#关键实体和关系-9" class="headerlink" title="关键实体和关系"></a>关键实体和关系</h4><p><strong>实体</strong></p>
+<ul>
+<li>总账科目</li>
+<li>资产科目</li>
+<li>费用科目</li>
+<li>收入科目</li>
+<li>负债科目</li>
+<li>权益科目</li>
+</ul>
+<p><strong>关系</strong></p>
+<ul>
+<li>总账科目与内部机构的关系</li>
+<li>财务/协议</li>
+<li>财务/地址区域</li>
+<li>财务/事件</li>
+</ul>
+<h2 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h2><p>Anny在A-BRANCH开立了储蓄账户saving4和一年期定期存款账户deposit1，在B－BRANCH开立了信用卡Card3（对应人民币账户card_acct1和美元账户card_acct2）。</p>
+<p><strong>ACCOUNT PARTY</strong></p>
+<table>
+<thead>
+<tr>
+<th>PTY</th>
+<th>ACCT</th>
+<th>RELATIONSHIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anny</td>
+<td>deposit1</td>
+<td>Account Holder</td>
+</tr>
+<tr>
+<td>Anny</td>
+<td>card_acct1</td>
+<td>Account Holder</td>
+</tr>
+<tr>
+<td>Anny</td>
+<td>card_acct2</td>
+<td>Account Holder</td>
+</tr>
+<tr>
+<td>Anny</td>
+<td>saving4</td>
+<td>Account Holder</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ACCOUNT PRODUCT HISTORY</strong></p>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>PROD</th>
+<th>PROD_Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>saving4</td>
+<td>Saving prod.</td>
+<td>is offered product</td>
+</tr>
+<tr>
+<td>deposit1</td>
+<td>Fixed Prod.</td>
+<td>is offered product</td>
+</tr>
+<tr>
+<td>card_acct1</td>
+<td>Credit Card Prod.</td>
+<td>is offered product</td>
+</tr>
+<tr>
+<td>card_acct2</td>
+<td>Credit Card Prod.</td>
+<td>is offered product</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ACCOUNT ACCESS DEVICE</strong></p>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>ACCESS_DEVICE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card_acct1</td>
+<td>Card3</td>
+</tr>
+<tr>
+<td>card_acct2</td>
+<td>Card3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PARTY ACCESS DEVICE</strong></p>
+<table>
+<thead>
+<tr>
+<th>PTY</th>
+<th>ACCESS_DEVICE</th>
+<th>ACCESS_Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-BRANCH</td>
+<td>Card3</td>
+<td>issue</td>
+</tr>
+<tr>
+<td>Anny</td>
+<td>Card3</td>
+<td>Use</td>
+</tr>
+</tbody>
+</table>
+<p><strong>INDIVIDUAL NAME HIST</strong></p>
+<table>
+<thead>
+<tr>
+<th>INDIVIDUAL NAME</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anny</td>
+<td>Legal name</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ORGANIZATION NAME HIST</strong></p>
+<table>
+<thead>
+<tr>
+<th>ORGANIZATION NAME</th>
+<th>HIST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A-BRANCH</td>
+<td>Legal name</td>
+</tr>
+<tr>
+<td>B-BRANCH</td>
+<td>Legal name</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ACCOUNT CURRENCY</strong></p>
+<table>
+<thead>
+<tr>
+<th>ACCT</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>saving4</td>
+<td>RMB</td>
+</tr>
+<tr>
+<td>deposit1</td>
+<td>RMB</td>
+</tr>
+<tr>
+<td>card_acct1</td>
+<td>RMB</td>
+</tr>
+<tr>
+<td>card_acct2</td>
+<td>USD</td>
+</tr>
+</tbody>
+</table>
+<p><strong>EVENT PRODUCT</strong></p>
+<table>
+<thead>
+<tr>
+<th>EVT</th>
+<th>PROD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>open saving account</td>
+<td>Saving prod.</td>
+</tr>
+<tr>
+<td>open deposit1 account</td>
+<td>Fixed prod.</td>
+</tr>
+<tr>
+<td>issue card3</td>
+<td>Credit card prod.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>EVENT PARTY</strong></p>
+<table>
+<thead>
+<tr>
+<th>EVT</th>
+<th>PTY</th>
+<th>PTY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>open saving account</td>
+<td>A-BRANCH</td>
+<td>response</td>
+</tr>
+<tr>
+<td>open deposit1 account</td>
+<td>A-BRANCH</td>
+<td>response</td>
+</tr>
+<tr>
+<td>issue card3</td>
+<td>B-BRANCH</td>
+<td>response</td>
+</tr>
+<tr>
+<td>open saving account</td>
+<td>Anny</td>
+<td>customer</td>
+</tr>
+<tr>
+<td>open deposit1 account</td>
+<td>Anny</td>
+<td>customer</td>
+</tr>
+<tr>
+<td>issue card3</td>
+<td>Anny</td>
+<td>customer</td>
+</tr>
+</tbody>
+</table>
+
+	
+	
+	
+	
+</div>
+
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2016/12/31/FS-LDM金融业逻辑数据模型介绍/" 
+            data-url="http://instore.top/2016/12/31/FS-LDM金融业逻辑数据模型介绍/"
+            data-title="FS-LDM金融业逻辑数据模型介绍"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2016/12/27/统一数据模型(Unified LDM)介绍/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Liang3p's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        liang3p@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="mailto:liang3p@gmail.com" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">4</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/liang3p" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/profile.php?id=100011242741015" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://plus.google.com/115291231508178529929" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    <a href="http://weibo.com/2837545975" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+        <span class="visuallyhidden">Weibo</span>
+    </button></a>
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;instore.top | Learn More, Share More.</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"instore"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
