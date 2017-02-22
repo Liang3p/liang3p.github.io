@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <!-- Title -->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Title -->
     
     <title>
         FS-LDM金融业逻辑数据模型介绍 | instore.top | Learn More, Share More.
@@ -168,7 +168,7 @@
 		}
 	</script>
     
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 </head>
 	
@@ -177,7 +177,7 @@
     <body id="scheme-Paradox">
 
 		
-        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
 				
 			
 			
@@ -739,9 +739,39 @@
 <li>6.5%</li>
 </ul>
 <p><strong>PRODUCT FEATURE</strong></p>
-<p>|PRODUCT |PRODUCT FEATURE|FEATURE TYPE|<br>|-|-|-|<br>|Mortgage| 20 Year| Mandatory Features|<br>|Mortgage| 6.5%| Mandatory Features|<br>|Insurance| 20 Year| Mandatory Features|<br>|Insurance| 1.5%| Mandatory Features|</p>
 </li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>PRODUCT</th>
+<th>PRODUCT FEATURE</th>
+<th>FEATURE TYPE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mortgage</td>
+<td>20 Year</td>
+<td>Mandatory Features</td>
+</tr>
+<tr>
+<td>Mortgage</td>
+<td>6.5%</td>
+<td>Mandatory Features</td>
+</tr>
+<tr>
+<td>Insurance</td>
+<td>20 Year</td>
+<td>Mandatory Features</td>
+</tr>
+<tr>
+<td>Insurance</td>
+<td>1.5%</td>
+<td>Mandatory Features</td>
+</tr>
+</tbody>
+</table>
 <h3 id="Agreement-协议"><a href="#Agreement-协议" class="headerlink" title="Agreement(协议)"></a>Agreement(协议)</h3><p><strong>定义</strong>：A contract or other kind of agreement of interest between Parties.<br><strong>实例</strong>: Checking account, commercial account, letter of credit, credit card, insurance policy, internal investments(活期存款账户、定期存款账户、养老金账户、信用卡、担保合同、贷款合同、内部投资账户、证券买卖账户、信用证、基金账户、保单……)<br><strong>协议是金融机构与当事人之间针对某种特定产品或服务而签立的契约关系。</strong>它可以是多样化的，如帐户、客户和银行签订的合同等。当金融机构与客户之间针对某种产品或服务的条款和条件达成协议时，一个协议（AGREEMENT）就会被开立，因此协议是客户和银行往来的重要载体。</p>
 <h4 id="主题域特点-3"><a href="#主题域特点-3" class="headerlink" title="主题域特点"></a>主题域特点</h4><ul>
 <li>AGREEMENT是金融机构与客户之间针对某种特定产品或服务而签立的契约关系。例如银行的帐户，保险公司的保单。</li>
@@ -1590,6 +1620,14 @@
     
     <!-- Prev Nav -->
     
+        <a href="/2017/01/01/机器学习算法笔记-感知机与单层神经网络/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
@@ -1682,7 +1720,7 @@
         </a>
         <ul class="dropdown-menu">
             <li>
-            <a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a>
+            <a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a>
         </ul>
     </li>
 
@@ -1697,7 +1735,7 @@
     <li>
         <a href="/archives">
              文章总数
-             <span class="sidebar-badge">4</span>
+             <span class="sidebar-badge">5</span>
         </a>
     </li>
 </ul>
@@ -2010,7 +2048,24 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- MathJax Load-->
 
             </main>
-        </div>
+        </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 		
     </body>
 		

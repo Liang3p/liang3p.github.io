@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Title -->
+    
+    <title>
+        机器学习算法笔记-感知机与单层神经网络 | instore.top | Learn More, Share More.
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Liang3p">
+    <meta name="description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="instore.top | Learn More, Share More.">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://instore.top">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="机器学习算法笔记-感知机与单层神经网络 | instore.top | Learn More, Share More.">
+    <meta property="og:description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理简述"><span class="post-toc-number">1.</span> <span class="post-toc-text">原理简述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">代码实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验及总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">实验及总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据准备"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">数据准备</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#简单可视化"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">简单可视化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#感知机的基本形式——以误分数为损失函数"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">感知机的基本形式——以误分数为损失函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Adaboost——梯度下降解"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">Adaboost——梯度下降解</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#标准化特征的求解"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">标准化特征的求解</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考资料"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考资料</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+
+<!-- header_home -->
+
+<!-- header_home -->
+<div class="material-index mdl-grid" style="margin-top: -145px;padding-left: 10px;padding-bottom: 80px;">
+    <a href="/">
+        <img src="/img/instore.top.png" alt="logo" />
+    </a>
+</div>
+
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            机器学习算法笔记-感知机与单层神经网络
+        </p>
+    </div>
+
+	
+
+
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Liang3p</strong>
+        <span>1月 01, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/感知机/">感知机</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/机器学习/">机器学习</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/神经网络/">神经网络</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=机器学习算法笔记-感知机与单层神经网络&url=http://instore.top//2017/01/01/机器学习算法笔记-感知机与单层神经网络/index.html&via=Liang3p" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://instore.top//2017/01/01/机器学习算法笔记-感知机与单层神经网络/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=机器学习算法笔记-感知机与单层神经网络&url=http://instore.top//2017/01/01/机器学习算法笔记-感知机与单层神经网络/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>博主在学习感知机算法时,参考了CSDN的一篇文章,在动手实践时,原文代码出现多处错误,经历多次调试才解决全部bug。近日偶然阅读了GitHub上一个开源羡项目的源码后,发现其源码实现上,构造方法和调用实例竟然全部一致！这才发觉自己走了不少弯路，因而在此分享下我的一些心得体会。<br>本文将简述感知机原理，而更多的关注代码实现。欲深入了解其数学原理，请参考李航博士编写的《统计学习方法》。</p>
+<h2 id="原理简述"><a href="#原理简述" class="headerlink" title="原理简述"></a>原理简述</h2><p>Frank Rosenblatt关于感知器学习规则的概念：感知器算法首先学习输入信号权值，然后得出线性决策边界，进而能够区分两个线性可分的类1和-1。<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773333737.jpg" alt="感知器算法"></p>
+<p>Rosenblatt最初的感知器规则相当简单,可总结为下面两步：</p>
+<ol>
+<li>将权值初始化为0或小随机数。</li>
+<li>对每一个训练样本：<br>2.1. 计算输出值。<br>2.2. 更新权值 $x^{(i)}$</li>
+</ol>
+<p>输出值就是根据我们早先定义的阶跃函数预测的类标签（output =g(z)），并且，权值的更新可以更正式地写成<br>$$<br>\begin{eqnarray}<br>w_{j}:=w_{j}+\Delta w_{j}<br>\end{eqnarray}<br>$$<br>在每个增量中，权值的更新值可由如下学习规则得到：<br>$$<br>\begin{eqnarray}<br>\Delta w_{j}=\eta (target^{(i)}-output^{(i)})x^{i}_{j}<br>\end{eqnarray}<br>$$<br>其中: η表示学习速率（0.0和1.0间的常数），target表示真实标签，output表示预测标签。</p>
+<p>需要注意的是，权值向量内的所有权值同步更新。具体来说，对于一个2维数据集，以如下方式描述更新：<br>$$<br>\begin{eqnarray}<br>\Delta _{0} &amp;=&amp; \eta \left ( target^{\left (i  \right )} -output^{\left ( i \right )}\right ) \\<br>\Delta _{1} &amp;=&amp; \eta \left ( target^{\left (i  \right )} -output^{\left ( i \right )}\right )x_{1}^{i} \\<br>\Delta _{2} &amp;=&amp; \eta \left ( target^{\left (i  \right )} -output^{\left ( i \right )}\right )x_{1}^{2}<br>\end{eqnarray}<br>$$</p>
+<p>在我们用Python实现感知器规则之前，让我们简单设想一下这种学习规则会多么简单。在感知器正确预测类标签的两个场景中，权值保持不变：<br>$$<br>\begin{eqnarray}<br>\Delta w_{j}=\eta (-1^{(i)}-(-1)^{(i)})x^{i}_{j}=0 \\<br>\Delta w_{j}=\eta (1^{(i)}-1^{(i)})x^{i}_{j}=0<br>\end{eqnarray}<br>$$</p>
+<p>但是，若预测出错，权值会被分别“推向”正或负的目标类方向：<br>$$<br>\begin{eqnarray}<br>\Delta w_{j}=\eta (1^{(i)}-(-1)^{(i)})x^{i}_{j}=\eta(2)x^{i}_{j} \\<br>\Delta w_{j}=\eta (-1^{(i)}-1^{(i)})x^{i}_{j}=\eta(-2)x^{i}_{j}<br>\end{eqnarray}<br>$$</p>
+<p>需要注意的是，只有当两个类线性可分才能保证感知器收敛。如果这两个类线性不可分。未避免死循环，我们可以设置一个训练集的最大训练次数，或者是设置一个可接受误分类个数的阈值。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>首先我们导入<code>numpy</code>处理序列数据,然后构造<code>Perceptron(object)</code>类，在这个类当中我们希望实现<code>train(X)</code>和<code>predict(X)</code>的功能.下面我们就可以开始实现分类器的关键部分了(性能考虑，我们使用内部的迭代器进行迭代)<br>完整代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Perceptron</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, epochs=<span class="number">50</span>)</span>:</span></div><div class="line">        self.eta = eta</div><div class="line">        self.epochs = epochs</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</div><div class="line">        self.errors_ = []</div><div class="line"></div><div class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.epochs):</div><div class="line">            errors = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> xi, target <span class="keyword">in</span> zip(X, y):</div><div class="line">                update = self.eta * (target - self.predict(xi))</div><div class="line">                self.w_[<span class="number">1</span>:] +=  update * xi</div><div class="line">                self.w_[<span class="number">0</span>] +=  update</div><div class="line">                errors += int(update != <span class="number">0.0</span>)</div><div class="line">            self.errors_.append(errors)</div><div class="line">        <span class="keyword">return</span> self</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></div><div class="line">       <span class="keyword">return</span> np.dot(X, self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</div></pre></td></tr></table></figure></p>
+<h2 id="实验及总结"><a href="#实验及总结" class="headerlink" title="实验及总结"></a>实验及总结</h2><h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>我们使用<a href="http://archive.ics.uci.edu/ml/" target="_blank" rel="external">UCI Machine Learning Repository</a>载入鸢尾花数据集,并只关注Setosa 和Versicolor两种花。此外，为了可视化方便，我们将只使用两种特性：萼片长度（sepal length ）和花片长度（petal length）。<br>在训练分类器之前,先将数据集中物种类别修改为二分类标签:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">df = pd.read_csv(<span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'</span>, header=<span class="keyword">None</span>)</div><div class="line">print(df.head())</div><div class="line">X = np.array(df.iloc[<span class="number">0</span>:<span class="number">100</span>, [<span class="number">0</span>, <span class="number">2</span>]])</div><div class="line">y = df.iloc[<span class="number">0</span>:<span class="number">100</span>, <span class="number">4</span>]</div><div class="line">y = np.where(y == <span class="string">'Iris-setosa'</span>, <span class="number">-1</span>, <span class="number">1</span>)</div><div class="line">print(<span class="string">"X:\n"</span>,X,<span class="string">"\ny:\n"</span>,y)</div><div class="line">y2 = df.iloc[<span class="number">51</span>:<span class="number">150</span>, <span class="number">4</span>].values              <span class="string">"""线性不可分数据"""</span></div><div class="line">y2 = np.where(y2 == <span class="string">'Iris-virginica'</span>, <span class="number">-1</span>, <span class="number">1</span>)</div><div class="line">X2 = df.iloc[<span class="number">51</span>:<span class="number">150</span>, [<span class="number">1</span>,<span class="number">3</span>]].values</div></pre></td></tr></table></figure></p>
+<h3 id="简单可视化"><a href="#简单可视化" class="headerlink" title="简单可视化"></a>简单可视化</h3><p>出于可视化的需要,我们将使用<code>matplotlib</code>对感知器进行绘图。绘制图片<code>matplotlib.pyplot.show()</code>时，会打开一个GUI窗体进行绘制，你可以使用<code>matplotlib.pyplot.ion()</code>开启interactive mode生成交互式窗体。<br>值得注意的是，show()方法一般写在最后，因为交互式绘图界面会阻塞线程，使得程序需要等待锁释放。想要自动结束该线程，你需要再调用<code>matplotlib.pyplot.close()</code>函数，但是如果你将这个方法直接写在<code>show()</code>之后，那么绘图窗口将一闪而过，有人提出用<code>time.sleep(5)</code>的<a href="http://bbs.eetop.cn/thread-382878-1-1.html" target="_blank" rel="external">方案</a>，这种方法可以确保你能看到绘图，但是无法进行交互操作（比如我想缩放、保存绘图）。其实更好的方法是去阅读<a href="http://matplotlib.org/contents.html" target="_blank" rel="external">官方文档</a>，你会发现<code>matplotlib.pyplot.pause(integer)</code>这个方法可以很好地解决问题。<br>另一个小问题就是，numpy中<code>np.arange()</code>返回左闭右开的区间，如果你观察足够仔细，你会发现绘图画布上会有一段空白，因此，当你在绘制网格的时候，需要注意加上这一段步长从而生成一个完整的区间。<br>下面是实现绘图的部分代码。同理，我们可以绘制出每次迭代的误差图，从而看到整个分类器的收敛速度。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, xlab, ylab, class_name1, class_name2, res=<span class="number">0.02</span>, t=<span class="number">3</span>)</span>:</span></div><div class="line">    markers = (<span class="string">'s'</span>, <span class="string">'o'</span>, <span class="string">'x'</span>, <span class="string">'^'</span>, <span class="string">'v'</span>)</div><div class="line">    colors = (<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'lightgreen'</span>, <span class="string">'gray'</span>, <span class="string">'cyan'</span>)</div><div class="line">    colormap = ListedColormap(colors[:len(np.unique(y))])</div><div class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></div><div class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></div><div class="line">    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max+res, res),</div><div class="line">                           np.arange(x2_min, x2_max+res, res))</div><div class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)</div><div class="line">    zz = Z.reshape(xx1.shape)</div><div class="line">    plt.ion()</div><div class="line">    plt.figure(<span class="number">2</span>)</div><div class="line">    plt.title(<span class="string">'Perceptron in python'</span>, size=<span class="number">14</span>)</div><div class="line">    plt.xlabel(xlab)</div><div class="line">    plt.ylabel(ylab)</div><div class="line">    plt.contourf(xx1, xx2, zz, cmap=colormap, alpha=<span class="number">0.5</span>)</div><div class="line">    <span class="keyword">for</span> idx, cl <span class="keyword">in</span> enumerate(np.unique(y)):</div><div class="line">        plt.scatter(x=X[y==cl, <span class="number">0</span>], y=X[y==cl, <span class="number">1</span>], marker=markers[idx],</div><div class="line">                    alpha=<span class="number">0.6</span>,</div><div class="line">                    c=colormap(idx),</div><div class="line">                    label=np.where(cl==<span class="number">-1</span>, class_name1, class_name2)</div><div class="line">                   )</div><div class="line">    plt.xlim(x1_min, x1_max)</div><div class="line">    plt.ylim(x2_min, x2_max)</div><div class="line">    plt.legend(loc=<span class="string">'upper left'</span>)</div><div class="line">    plt.show()</div><div class="line">    plt.pause(t)</div><div class="line">    plt.close()</div></pre></td></tr></table></figure></p>
+<h3 id="感知机的基本形式——以误分数为损失函数"><a href="#感知机的基本形式——以误分数为损失函数" class="headerlink" title="感知机的基本形式——以误分数为损失函数"></a>感知机的基本形式——以误分数为损失函数</h3><p>感知机的基础是基于误分类实现的，对于一个线性可分的数据集，感知机的训练速度很快，单纯以误分类样本去更新权重的方法可以得到下面的结果：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773611492.png" alt=""></p>
+<p>收敛的速度：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773611434.png" alt=""></p>
+<p>我们可以看到，对于线性可分的数据,分界线对于预测范围的做了比较好的划分。<br>然而，收敛是感知器的最大问题之一。<br>Frank Rosenblatt在数学上证明了当两个类可由线性超平面分离时,感知器学习规则收敛，但当类无法由线性分类器完美分离时,问题就出现了：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773551715.png" alt=""><br>对于线性不可分的数据，感知机并不能给出我们想要的效果，而且无法收敛：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/14877355177.png" alt=""><br>综上，感知机分类的先决条件是线性可分，否则模型不可用。</p>
+<h3 id="Adaboost——梯度下降解"><a href="#Adaboost——梯度下降解" class="headerlink" title="Adaboost——梯度下降解"></a>Adaboost——梯度下降解</h3><p>假如我们修改误差定义，每次计算数据的平方误差，再在迭代中设定一个学习率，使得每次改变都会距离目标靠近一点点（当然，如果你设置了过大的学习率，就会错过全局最优解——但是，这么做的好处是，让你的模型变得更加可控了）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdaLine</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, n_iter=<span class="number">10</span>)</span>:</span></div><div class="line">        self.eta = eta</div><div class="line">        self.n_iter = n_iter</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        self.w_ = np.zeros(<span class="number">1</span>+X.shape[<span class="number">1</span>])</div><div class="line">        self.J_ = []</div><div class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.n_iter):</div><div class="line">            errors = y - self.activation(X)</div><div class="line">            self.w_[<span class="number">0</span>] += self.eta * errors.sum()</div><div class="line">            self.w_[<span class="number">1</span>:] += self.eta * X.T.dot(errors)</div><div class="line">            J = errors.dot(errors)/<span class="number">2.</span></div><div class="line">            self.J_.append(J)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> X.dot(self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.net_input(X)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.</span>, <span class="number">1</span>, <span class="number">-1</span>)</div></pre></td></tr></table></figure></p>
+<p>为了看到学习率的影响，我们进行四组实验：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773551828.png" alt="adaboost"><br>可以看到，如果你设置了一个不合理的学习率，这将导致你的模型错过最优解。问题是，难道我们要不断调试学习率吗？而且，如果只要抽样不同，学习率带来的误差波动会很大——因此你需要做数据标准化。</p>
+<h3 id="标准化特征的求解"><a href="#标准化特征的求解" class="headerlink" title="标准化特征的求解"></a>标准化特征的求解</h3><p>如果特征在同一个数量级上,便可以更容易找到合适的学习速率,实现更快的收敛和防止权值过小(数值稳定)。<br>标准化的方法是：<br>$$<br>\begin{eqnarray}<br>x_{i}=\frac{x_{i}-\mu }{\sigma }<br>\end{eqnarray}<br>$$<br>这样处理过的数据集就服从了$N\sim\left ( \mu ,\sigma \right ), \mu =0,\sigma =1$的标准正态分布。<br>特征缩放之后的分类结果如图：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773551931.png" alt=""><br>学习率对收敛的影响：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773551881.png" alt=""></p>
+<p>使用0.01的学习率会有不错的收敛速度：<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148773551985.png" alt=""></p>
+<p>本文用到的完整代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/env/python3</span></div><div class="line"><span class="comment">#Perceptron in python</span></div><div class="line"><span class="string">"""</span></div><div class="line">iris 数据集 (取前100行进行分类,只有两个类别:Setosa和Versicolour)</div><div class="line">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/</div><div class="line">Attribute Information:</div><div class="line">   1. sepal length in cm</div><div class="line">   2. sepal width in cm</div><div class="line">   3. petal length in cm</div><div class="line">   4. petal width in cm</div><div class="line">   5. class:</div><div class="line">      -- Iris Setosa       (line:  1 -  50)</div><div class="line">      -- Iris Versicolour  (line: 51 - 100)</div><div class="line">      -- Iris Virginica    (line:101 - 150)</div><div class="line">"""</div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</div><div class="line"></div><div class="line"><span class="comment">#读取数据</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_csv_data</span><span class="params">(filename)</span>:</span></div><div class="line">    df = pd.read_csv(filename, header=<span class="keyword">None</span>)     <span class="comment">#返回DataFrame</span></div><div class="line">    <span class="comment">#print(df.head())</span></div><div class="line">    X = np.array(df.iloc[<span class="number">0</span>:<span class="number">100</span>, [<span class="number">0</span>, <span class="number">2</span>]])        <span class="comment">#只考虑sepal length &amp; petal length,为了可视化的的需要,此时X的类型是numpy.ndarray</span></div><div class="line">    y = df.iloc[<span class="number">0</span>:<span class="number">100</span>, <span class="number">4</span>]</div><div class="line">    y = np.where(y == <span class="string">'Iris-setosa'</span>, <span class="number">-1</span>, <span class="number">1</span>)     <span class="comment">#将string类型的类别标签转化为二分类标签</span></div><div class="line">    <span class="comment">#print("X:\n",X,"\ny:\n",y)</span></div><div class="line">    y2 = df.iloc[<span class="number">51</span>:<span class="number">150</span>, <span class="number">4</span>].values              <span class="comment">#线性不可分数据</span></div><div class="line">    y2 = np.where(y2 == <span class="string">'Iris-virginica'</span>, <span class="number">-1</span>, <span class="number">1</span>)</div><div class="line">    X2 = df.iloc[<span class="number">51</span>:<span class="number">150</span>, [<span class="number">1</span>,<span class="number">3</span>]].values          <span class="comment">#sepal width and petal width</span></div><div class="line">    <span class="keyword">return</span> X,y,X2,y2</div><div class="line"></div><div class="line"><span class="comment">#感知机的基本形式——以误分数为损失函数</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Perceptron</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, n_iter=<span class="number">10</span>)</span>:</span></div><div class="line">        self.eta = eta</div><div class="line">        self.n_iter = n_iter</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</div><div class="line">        self.J_ = []        <span class="comment"># 记录每次迭代的误分数</span></div><div class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.n_iter):</div><div class="line">            J = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> xi, yi <span class="keyword">in</span> zip(X, y):</div><div class="line">                delta = yi - self.activation(xi)</div><div class="line">                self.w_[<span class="number">0</span>] += self.eta * delta</div><div class="line">                self.w_[<span class="number">1</span>:] += self.eta * delta * xi</div><div class="line">                J += int(delta != <span class="number">0.0</span>)</div><div class="line">            self.J_.append(J)</div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> X.dot(self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</div><div class="line"></div><div class="line"><span class="comment">#分类器可视化</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_regions</span><span class="params">(X, y, classifier, xlab, ylab, class_name1, class_name2, res=<span class="number">0.02</span>, t=<span class="number">3</span>)</span>:</span></div><div class="line">    markers = (<span class="string">'s'</span>, <span class="string">'o'</span>, <span class="string">'x'</span>, <span class="string">'^'</span>, <span class="string">'v'</span>)</div><div class="line">    colors = (<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'lightgreen'</span>, <span class="string">'gray'</span>, <span class="string">'cyan'</span>)</div><div class="line">    colormap = ListedColormap(colors[:len(np.unique(y))])</div><div class="line">    <span class="string">""" 创建网格以方便绘制 """</span></div><div class="line">    x1_min, x1_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></div><div class="line">    x2_min, x2_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></div><div class="line">    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max+res, res),</div><div class="line">                           np.arange(x2_min, x2_max+res, res))        <span class="comment">#np.arange含起点不含终点,绘制网格时候加上终点以免留出空白</span></div><div class="line">    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)    <span class="comment">#xx1.ravel()将xx1从numpy.narray类型的多维数组转换为一维数组</span></div><div class="line">    zz = Z.reshape(xx1.shape)</div><div class="line">    print(<span class="string">"count of zz:\n"</span>,np.asarray(np.unique(zz, return_counts=<span class="keyword">True</span>)).T)    <span class="comment">#(zz==-1).sum() zz打印出来似乎和绘图不一致?注意zz是安装下标打印的</span></div><div class="line">    print(<span class="string">"_"</span>*<span class="number">44</span>,<span class="string">"\n-1:"</span>,class_name1,<span class="string">"\t1:"</span>,class_name2,<span class="string">"\n"</span>,zz,<span class="string">"\n"</span>,xlab,<span class="string">":\n"</span>,xx1,<span class="string">"\n"</span>,ylab,<span class="string">":\n"</span>,xx2)</div><div class="line">    plt.ion()</div><div class="line">    plt.figure(<span class="number">2</span>)</div><div class="line">    plt.title(<span class="string">'Perceptron in python'</span>, size=<span class="number">14</span>)</div><div class="line">    plt.xlabel(xlab)</div><div class="line">    plt.ylabel(ylab)</div><div class="line">    plt.contourf(xx1, xx2, zz, cmap=colormap, alpha=<span class="number">0.5</span>)	<span class="comment">#cmap=colormap 或者 cmap = plt.cm.Paired</span></div><div class="line">    <span class="keyword">for</span> idx, cl <span class="keyword">in</span> enumerate(np.unique(y)):</div><div class="line">        plt.scatter(x=X[y==cl, <span class="number">0</span>], y=X[y==cl, <span class="number">1</span>], marker=markers[idx],</div><div class="line">                    alpha=<span class="number">0.6</span>,                              <span class="comment">#设置合适的透明度,可以根据颜色深浅看到重叠的数据点</span></div><div class="line">                    c=colormap(idx),                        <span class="comment">#使用cmap不会正常绘制,这里要用c=colormap(idx)</span></div><div class="line">                    label=np.where(cl==<span class="number">-1</span>, class_name1, class_name2)</div><div class="line">                   )</div><div class="line">    plt.xlim(x1_min, x1_max)</div><div class="line">    <span class="comment">#plt.xlim(x1_min, x1_max-res)    #如果创建网格时未加上res,图像就会留出res宽度的白边,所以要设置x1_max-0.02,去除图像上边和右侧的白边</span></div><div class="line">    plt.ylim(x2_min, x2_max)</div><div class="line">    plt.legend(loc=<span class="string">'upper left'</span>)</div><div class="line">    plt.show()</div><div class="line">    plt.pause(t)</div><div class="line">    plt.close()</div><div class="line"></div><div class="line"><span class="comment">#显示随着迭代的进行,误分数的变化情况</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_percetron_iter</span><span class="params">(classifier, xlab, ylab, t=<span class="number">3</span>)</span>:</span></div><div class="line">    plt.gca()</div><div class="line">    plt.ion()</div><div class="line">    plt.figure(<span class="number">1</span>)</div><div class="line">    plt.xlabel(xlab)</div><div class="line">    plt.ylabel(ylab)</div><div class="line">    plt.xlim(<span class="number">0</span>, len(classifier.J_))</div><div class="line">    plt.ylim(min(classifier.J_)<span class="number">-1</span>, max(classifier.J_)+<span class="number">1</span>)</div><div class="line">    plt.plot(range(<span class="number">1</span>, <span class="number">1</span> + len(classifier.J_)), classifier.J_, marker=<span class="string">'o'</span>)</div><div class="line">    plt.show()</div><div class="line">    plt.pause(t)</div><div class="line">    plt.close()</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">#平方误差之和损失函数下的感知机的梯度下降解</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdaLine</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, n_iter=<span class="number">10</span>)</span>:</span></div><div class="line">        self.eta = eta</div><div class="line">        self.n_iter = n_iter</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></div><div class="line">        self.w_ = np.zeros(<span class="number">1</span>+X.shape[<span class="number">1</span>])</div><div class="line">        self.J_ = []</div><div class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(self.n_iter):</div><div class="line">            errors = y - self.activation(X)</div><div class="line">            self.w_[<span class="number">0</span>] += self.eta * errors.sum()</div><div class="line">            self.w_[<span class="number">1</span>:] += self.eta * X.T.dot(errors)</div><div class="line">            J = errors.dot(errors)/<span class="number">2.</span></div><div class="line">            self.J_.append(J)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> X.dot(self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.net_input(X)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">        <span class="keyword">return</span> np.where(self.net_input(X) &gt;= <span class="number">0.</span>, <span class="number">1</span>, <span class="number">-1</span>)</div><div class="line"></div><div class="line"><span class="comment">#考察learning rate的影响</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_learning_rate</span><span class="params">(X, y, eta, n_iter, t=<span class="number">3</span>)</span>:</span></div><div class="line">    fig, ax = plt.subplots(nrows=<span class="number">1</span>, ncols=len(eta), figsize=(<span class="number">4</span>*len(eta), <span class="number">5</span>))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(eta)):</div><div class="line">        ada_instance = AdaLine(eta=eta[i], n_iter=n_iter[i])</div><div class="line">        ada_instance.fit(X=X, y=y)</div><div class="line">        ax[i].plot(range(<span class="number">1</span>, <span class="number">1</span>+len(ada_instance.J_)), np.log10(ada_instance.J_), marker=<span class="string">'o'</span>)</div><div class="line">        ax[i].set_xlabel(<span class="string">'epochs'</span>)</div><div class="line">        ax[i].set_ylabel(<span class="string">'sum-squared-error'</span>)</div><div class="line">        ax[i].set_title(<span class="string">'learning rate: %f'</span>%eta[i])</div><div class="line">    plt.show()</div><div class="line">    plt.pause(t)</div><div class="line">    plt.close()</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdalineGD</span><span class="params">(object)</span>:</span></div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, eta=<span class="number">0.01</span>, epochs=<span class="number">50</span>)</span>:</span></div><div class="line">       self.eta = eta</div><div class="line">       self.epochs = epochs</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, X, y)</span>:</span></div><div class="line">       self.w_ = np.zeros(<span class="number">1</span> + X.shape[<span class="number">1</span>])</div><div class="line">       self.cost_ = []</div><div class="line">       self.J_ = []</div><div class="line">       <span class="keyword">for</span> i <span class="keyword">in</span> range(self.epochs):</div><div class="line">           output = self.net_input(X)</div><div class="line">           errors = (y - output)</div><div class="line">           self.w_[<span class="number">1</span>:] += self.eta * X.T.dot(errors)</div><div class="line">           self.w_[<span class="number">0</span>] += self.eta * errors.sum()</div><div class="line">           cost = (errors**<span class="number">2</span>).sum() / <span class="number">2.0</span></div><div class="line">           self.cost_.append(cost)</div><div class="line">           self.J_.append(cost)</div><div class="line">       <span class="keyword">return</span> self</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">net_input</span><span class="params">(self, X)</span>:</span></div><div class="line">       <span class="keyword">return</span> np.dot(X, self.w_[<span class="number">1</span>:]) + self.w_[<span class="number">0</span>]</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(self, X)</span>:</span></div><div class="line">       <span class="keyword">return</span> self.net_input(X)</div><div class="line">   <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></div><div class="line">       <span class="keyword">return</span> np.where(self.activation(X) &gt;= <span class="number">0.0</span>, <span class="number">1</span>, <span class="number">-1</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    data_url = <span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'</span></div><div class="line">    X,y,X2,y2 = read_csv_data(data_url)</div><div class="line"></div><div class="line">    <span class="comment">#基本形式-误分类数</span></div><div class="line">    <span class="comment">#分类器训练和可视化</span></div><div class="line">    print(<span class="string">"\n基本形式-误分类数"</span>)</div><div class="line">    ppn = Perceptron(eta=<span class="number">0.1</span>, n_iter=<span class="number">10</span>).fit(X, y)</div><div class="line">    plot_decision_regions(X, y, ppn, <span class="string">'sepal length [cm]'</span>, <span class="string">'petal length [cm]'</span>, <span class="string">'setosa'</span>, <span class="string">'versicolor'</span>, res=<span class="number">0.02</span>, t=<span class="number">5</span>)</div><div class="line">    print(<span class="string">"_"</span>*<span class="number">44</span>,<span class="string">"\nWeights: %s"</span> % ppn.w_,<span class="string">"\nDecision=sign("</span>,ppn.w_[<span class="number">1</span>],<span class="string">" * x1 + "</span>,ppn.w_[<span class="number">2</span>],<span class="string">" * x2 + "</span>,ppn.w_[<span class="number">0</span>],<span class="string">");\nx1:sepal length\nx2:petal length"</span>)</div><div class="line">    show_percetron_iter(ppn, xlab=<span class="string">'epochs'</span>,ylab=<span class="string">'# of iterations'</span>, t=<span class="number">2</span>)</div><div class="line"></div><div class="line">    <span class="string">"""</span></div><div class="line">        收敛是感知器的最大问题之一</div><div class="line">        Frank Rosenblatt在数学上证明了当两个类可由线性超平面分离时,感知器学习规则收敛</div><div class="line">        但当类无法由线性分类器完美分离时,问题就出现了</div><div class="line">    """</div><div class="line">    <span class="comment">#线性不可分的数据</span></div><div class="line">    print(<span class="string">"\n线性不可分"</span>)</div><div class="line">    ppn2 = Perceptron(eta=<span class="number">0.01</span>, n_iter=<span class="number">25</span>).fit(X2, y2)</div><div class="line">    plot_decision_regions(X2, y2, ppn2, <span class="string">'sepal width [cm]'</span>, <span class="string">'petal width [cm]'</span>, <span class="string">'virginica'</span>, <span class="string">'versicolor'</span>, res=<span class="number">0.02</span>, t=<span class="number">5</span>)</div><div class="line">    print(<span class="string">"_"</span>*<span class="number">44</span>,<span class="string">"\nWeights: %s"</span> % ppn2.w_,<span class="string">"\nDecision=sign("</span>,ppn2.w_[<span class="number">1</span>],<span class="string">" * x1 + "</span>,ppn2.w_[<span class="number">2</span>],<span class="string">" * x2 + "</span>,ppn2.w_[<span class="number">0</span>],<span class="string">");\nx1:sepal width\nx2:petal width"</span>)</div><div class="line">    show_percetron_iter(ppn2, xlab=<span class="string">'Iterations'</span>, ylab=<span class="string">'Missclassifications'</span>, t=<span class="number">2</span>)</div><div class="line"></div><div class="line">    <span class="comment">#梯度下降算法</span></div><div class="line">    <span class="comment">#考察learning rate的影响</span></div><div class="line">    eta=[ <span class="number">0.01</span>, <span class="number">0.0001</span>, <span class="number">0.000545</span>, <span class="number">0.0004</span>]</div><div class="line">    n_iter=[<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">120</span>]</div><div class="line">    test_learning_rate(X, y, eta, n_iter, t=<span class="number">5</span>)</div><div class="line"></div><div class="line">    <span class="string">"""</span></div><div class="line">    学习率的影响</div><div class="line">    1.若学习速率过大，梯度下降将超过最小值并偏离</div><div class="line">    2.若学习速率过小，算法将需要过多的迭代次数才能收敛,并会更容易陷入局部最小中</div><div class="line">    梯度下降也可解释为什么特征缩放对很多机器学习算法地重要性</div><div class="line">    如果特征在同一个数量级上,便可以更容易找到合适的学习速率,实现更快的收敛和防止权值过小(数值稳定)</div><div class="line">    特征缩放的一般方法是标准化</div><div class="line">    """</div><div class="line">    <span class="comment">#特征标准化</span></div><div class="line">    <span class="comment">#standardize features</span></div><div class="line">    X_std = np.copy(X)</div><div class="line">    X_std[:,<span class="number">0</span>] = (X[:,<span class="number">0</span>] - X[:,<span class="number">0</span>].mean()) / X[:,<span class="number">0</span>].std()</div><div class="line">    X_std[:,<span class="number">1</span>] = (X[:,<span class="number">1</span>] - X[:,<span class="number">1</span>].mean()) / X[:,<span class="number">1</span>].std()</div><div class="line"></div><div class="line">    eta = [ <span class="number">0.02</span>, <span class="number">0.001</span>, <span class="number">0.01104</span>, <span class="number">0.01</span>]</div><div class="line">    n_iter = [<span class="number">20</span>, <span class="number">20</span>, <span class="number">20</span>, <span class="number">50</span>]</div><div class="line">    test_learning_rate(X_std, y, eta, n_iter, t=<span class="number">5</span>)</div><div class="line"></div><div class="line">    <span class="comment">#平方误差损失函数</span></div><div class="line">    print(<span class="string">"\n平方误差损失函数"</span>)</div><div class="line">    ada = AdalineGD(epochs=<span class="number">15</span>, eta=<span class="number">0.01</span>)</div><div class="line">    ada.train(X_std, y)</div><div class="line">    plot_decision_regions(X_std, y, ada, <span class="string">'sepal length [standardized]'</span>, <span class="string">'petal length [standardized]'</span>, <span class="string">'setosa'</span>, <span class="string">'versicolor'</span>, res=<span class="number">0.02</span>, t=<span class="number">5</span>)</div><div class="line">    print(<span class="string">"_"</span>*<span class="number">44</span>,<span class="string">"\nWeights: %s"</span> % ada.w_,<span class="string">"\nDecision=sign("</span>,ada.w_[<span class="number">1</span>],<span class="string">" * x1 + "</span>,ada.w_[<span class="number">2</span>],<span class="string">" * x2 + "</span>,ada.w_[<span class="number">0</span>],<span class="string">");\nx1:sepal length\nx2:petal length"</span>)</div><div class="line">    show_percetron_iter(ada, xlab=<span class="string">'Iterations'</span>, ylab=<span class="string">'Sum-squared-error'</span>, t=<span class="number">2</span>)</div></pre></td></tr></table></figure></p>
+<p>文章写到这里，我已经修改了很多次。一点吐槽是，hexo引擎在解析LaTeX公式出现换行被转义的问题,好在还有<a href="http://blog.csdn.net/sherlockzoom/article/details/43835613" target="_blank" rel="external">解决方案</a>，而在代码高亮处理上就没那么幸运了，hexo在解析markdown文件时屏蔽了<code>#</code>导致代码高亮异常。不过，就算这样，我也懒得去修改了——毕竟没出问题的代码高亮也奇丑无比——折腾Javascript和CSS太没意思了。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>上文提到的一些参考资料,以及一些拓展的材料</p>
+<ol>
+<li><p>CSDN博客文章<br><a href="http://blog.csdn.net/lanchunhui/article/details/49401203" target="_blank" rel="external">python 机器学习——从感知机算法到各种最优化方法的应用（python）</a></p>
+</li>
+<li><p>机器学习拓展库及Github源码<br><a href="http://rasbt.github.io/mlxtend/" target="_blank" rel="external">机器学习拓展库</a><br>感知机部分相应的Github源码：<a href="https://github.com/rasbt/mlxtend/blob/master/mlxtend/classifier/perceptron.py" target="_blank" rel="external">perceptron.py</a></p>
+</li>
+<li><p>单层神经网络算法,请参考这篇文章：<br><a href="http://sebastianraschka.com/Articles/2015_singlelayer_neurons.html" target="_blank" rel="external">Single-Layer Neural Networks and Gradient Descent</a></p>
+</li>
+<li><p>机器学习算法原理之人工神经元和单层神经网络<br><a href="http://python.jobbole.com/81278/" target="_blank" rel="external">http://python.jobbole.com/81278/</a></p>
+</li>
+<li><p>梯度下降的理论知识<br><a href="http://python.jobbole.com/86921/" target="_blank" rel="external">梯度下降算法以及其Python实现</a></p>
+</li>
+</ol>
+
+	
+	
+	
+	
+</div>
+
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/01/01/机器学习算法笔记-感知机与单层神经网络/" 
+            data-url="http://instore.top/2017/01/01/机器学习算法笔记-感知机与单层神经网络/"
+            data-title="机器学习算法笔记-感知机与单层神经网络"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2016/12/31/FS-LDM金融业逻辑数据模型介绍/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Liang3p's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        liang3p@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="mailto:liang3p@gmail.com" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">5</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/liang3p" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/profile.php?id=100011242741015" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://plus.google.com/115291231508178529929" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    <a href="http://weibo.com/2837545975" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+        <span class="visuallyhidden">Weibo</span>
+    </button></a>
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;instore.top | Learn More, Share More.</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"instore"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+            </main>
+        </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+		
+    </body>
+		
+	
+</html>
