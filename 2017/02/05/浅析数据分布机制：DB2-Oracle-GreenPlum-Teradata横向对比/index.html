@@ -343,7 +343,7 @@
 	
 		<p>设计建设数据仓库之初,查询性能是一项非常重要的性能指标.影响查询性能的因素很多,数据分布是数据查询性能优化的重点之一。数据分布是并行数据库系统实现的基础,MPP架构的数据仓库更是依赖于其数据库内部强大的数据分布机制.本文介绍了几种传统关系型数据库的数据分布特点,并对其适用场景做了简要介绍.<br>At the beginning of the data warehouse design construction, query performance is a very important performance indicator. There are many factors which can affect the query performance, data distribution is one of the focus of the data query performance optimization. Data distribution is the basis of parallel database system, the MPP architecture of data warehouse is dependent on its powerful data distribution inside the database system. This paper introduces several kinds of traditional relational database data distribution characteristics, and has made the brief introduction of the applicable to the scene.</p>
 <h2 id="分布的概念和特点"><a href="#分布的概念和特点" class="headerlink" title="分布的概念和特点"></a>分布的概念和特点</h2><p>了解数据库的数据分布机制对于提升系统性能有很大帮助。以Teradata为例，主索引(Primary Index)的设置就能影响数据分布。在Teradata中，除了Partition进行数据分区外，PI字段会按照Hash散列算法对数据进行分布，因此在建表的时候需要慎重选择PI，以免因PI字段重复值过多而造成表倾斜。实际应用时，在Teradata中建立一张PPI表可以显著提升历史数据处理的速度，这点对于查询任务繁重的数据仓库系统非常重要。</p>
-<h3 id="数据分布的目的"><a href="#数据分布的目的" class="headerlink" title="数据分布的目的"></a>数据分布的目的</h3><p>在数据库设计中,通过数据切分实现数据的快速检索.数据分区与索引优化不同,索引是将索引字段按照Hash算法进行拆分存储,在查询时,就可以根据索引从而快速定位到物理存储节点上，从而加快查询速度.大部分MPP架构的数据库都支持Hash分布, 这使得索引可以很好的提升查询性能，并且不会造成数据倾斜.<br>MySQL数据库作为当下最流行的开源免费的数据库,一般应用于中小型企业的业务系统的搭建.尽管其非MPP架构、子查询优化不佳、对复杂查询优化不够、不支持Hash join和Merge- join等致命缺陷,但是仍有不少的企业将其做为小型数据集市的选择(从性能方面考虑,MySQL更适合应用在业务系统的建设中,而不是用来作为数据仓库的基础配置).可能是因为这些明显的短板,MySQL的性能优化更多的集中在了分库、分表、读写分离的方式上.当数据量级上升,业务复杂度增加时,MySQL很容易遭遇性能问题.因此,企业一般都需要对业务做水平或者垂直的拆分,再进行分库分表操作.出于集群整体的读写性能考虑,一般都会进行主从复制,读写分离的架构,这点对于OLTP设计的MySQL主数据存储尤为重要.但是，如此操作也会有相应的代价：拆分对线上业务造成冲击，多表关联和事务性要求高的场合不适用;垂直拆分时,需要配置多个数据源,造成业务单元内部零散化,业务模块间数据处理相对混乱,耦合难度上升,这也会提高数据库的管理成本.</p>
+<h3 id="数据分布的目的"><a href="#数据分布的目的" class="headerlink" title="数据分布的目的"></a>数据分布的目的</h3><p>在数据库设计中,通过数据切分实现数据的快速检索.数据分区与索引优化不同,索引是将索引字段按照Hash算法进行拆分存储,在查询时,就可以根据索引从而快速定位到物理存储节点上，从而加快查询速度.大部分MPP架构的数据库都支持Hash分布, 这使得索引可以很好的提升查询性能，并且不会造成数据倾斜.<br>MySQL数据库作为当下最流行的开源免费的数据库,一般应用于中小型企业的业务系统的搭建.尽管其非MPP架构、子查询优化不佳、对复杂查询优化不够、不支持Hash join和Merge- join等致命缺陷,但是仍有不少的企业将其做为小型数据集市的选择(从性能方面考虑,MySQL更适合应用在业务系统的建设中,而不是用来作为数据仓库的基础配置).可能是因为这些明显的短板,MySQL的性能优化更多的集中在了分库、分表、读写分离的方式上.当数据量级上升,业务复杂度增加时,MySQL很容易遭遇性能问题.因此,企业一般都需要对业务做水平或者垂直的拆分,再进行分库分表操作.出于集群整体的读写性能考虑,一般都会进行主从复制,读写分离的架构,这点对于OLTP设计的MySQL主数据存储尤为重要.但是，如此操作也会有相应的代价：水平拆分对线上业务造成冲击，多表关联和事务性要求高的场合不适用;垂直拆分时,需要配置多个数据源,造成业务单元内部零散化,业务模块间数据处理相对混乱,耦合难度上升,这也会提高数据库的管理成本.</p>
 <h3 id="分区的概念"><a href="#分区的概念" class="headerlink" title="分区的概念"></a>分区的概念</h3><p>对于数据仓库系统大量的OLAP操作,分库、分表、索引等数据拆分的手段在大量的历史数据和增量数据面前表现相对无力。<strong>分区(PATITION)</strong>就是表内实现数据分片操作的重要手段.一般而言,数据分片在历史数据场景中更多是对于时间区间内的数据处理(比如常规按照日期频度汇总、差分、累计平均等操作的报表、指标和时间序列数据的预测等).这些操作经常需要获取一段时间的数据,使用时间字段作为分区就能快速得到相应的数据分片.<br>一般而言，在以下条件时通常会创建一个分区表来改善性能:</p>
 <ul>
 <li>单表数据量巨大</li>
@@ -381,7 +381,7 @@
 <li>避免各个分区之间查找数据，并且各个分区可以放在不同的设备上，达到最大的I0吞吐量。也可以用STORE IN 子句分配每个分区到不同的表空间。</li>
 </ul>
 </li>
-<li><p><strong>LIST Partition</strong><br>当分区数据是少量的有限集合但又不方便进行Range Partition时,要对于这些离散的值进行分区,LIST Partition是个比较好的选择。</p>
+<li><p><strong>List Partition</strong><br>当分区数据是少量的有限集合但又不方便进行Range Partition时,要对于这些离散的值进行分区,LIST Partition是个比较好的选择。</p>
 </li>
 <li><p><strong>Composite Range-Hash Partitioning</strong><br>这是Range和Hash的组合使用，先对表用RANGE分，然后对每个RANGE再做HASH分区。<br>由于做了RANGE后的子分区是没有规律的，如果在数据仓库设计时候，通过查询需求觉得有必要再细分，可以考虑使用。</p>
 </li>
@@ -544,6 +544,14 @@
     
     <!-- Prev Nav -->
     
+        <a href="/2017/02/25/统一数据模型(Unified LDM)介绍/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
@@ -636,7 +644,7 @@
         </a>
         <ul class="dropdown-menu">
             <li>
-            <a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a>
+            <a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">3</span></a>
         </ul>
     </li>
 
