@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://instore.top/"/>
-  <updated>2017-02-22T14:01:40.389Z</updated>
+  <updated>2017-02-25T03:57:00.700Z</updated>
   <id>http://instore.top/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅析数据分布机制：DB2-Oracle-GreenPlum-Teradata横向对比</title>
+    <link href="http://instore.top/2017/02/05/%E6%B5%85%E6%9E%90%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E6%9C%BA%E5%88%B6%EF%BC%9ADB2-Oracle-GreenPlum-Teradata%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94/"/>
+    <id>http://instore.top/2017/02/05/浅析数据分布机制：DB2-Oracle-GreenPlum-Teradata横向对比/</id>
+    <published>2017-02-05T02:56:56.265Z</published>
+    <updated>2017-02-25T03:57:00.700Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;设计建设数据仓库之初,查询性能是一项非常重要的性能指标.影响查询性能的因素很多,数据分布是数据查询性能优化的重点之一。数据分布是并行数据库系统实现的基础,MPP架构的数据仓库更是依赖于其数据库内部强大的数据分布机制.本文介绍了几种传统关系型数据库的数据分布特点,并对其适用场
+    
+    </summary>
+    
+      <category term="数据仓库" scheme="http://instore.top/categories/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+    
+      <category term="数据分布" scheme="http://instore.top/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83/"/>
+    
+      <category term="分区" scheme="http://instore.top/tags/%E5%88%86%E5%8C%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>机器学习算法笔记-感知机与单层神经网络</title>
