@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Title -->
+    
+    <title>
+        生来并行，天生超越——MPP架构原理及实现 | instore.top | Learn More, Share More.
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Liang3p">
+    <meta name="description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="instore.top | Learn More, Share More.">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://instore.top">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="生来并行，天生超越——MPP架构原理及实现 | instore.top | Learn More, Share More.">
+    <meta property="og:description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#序（Introduction）"><span class="post-toc-number">1.</span> <span class="post-toc-text">序（Introduction）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多维并行能力（Multidimensional-Parallel-Capabilities）"><span class="post-toc-number">2.</span> <span class="post-toc-text">多维并行能力（Multidimensional Parallel Capabilities）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查询并行的类型（Types-of-Query-Parallelism）"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">查询并行的类型（Types of Query Parallelism）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#跨越AMP并行执行（Parallel-Execution-Across-AMPs）"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">跨越AMP并行执行（Parallel Execution Across AMPs）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#单步并行（Within-a-Step-Parallelism）"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">单步并行（Within-a-Step Parallelism）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#多步并行（Multi-Step-Parallelism）"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">多步并行（Multi-Step Parallelism）</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多语句的请求（Multi-Statement-Requests）"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">多语句的请求（Multi-Statement Requests）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#演化形式（Evolution）"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">演化形式（Evolution）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#并行感知优化器（Parallel-Aware-Optimizer）"><span class="post-toc-number">3.</span> <span class="post-toc-text">并行感知优化器（Parallel-Aware Optimizer）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关联计划（Join-Planning）"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">关联计划（Join Planning）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#估量环境（Sizing-up-the-Environment）"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">估量环境（Sizing up the Environment）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#以并行的方式思考（Thinking-in-Parallel）"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">以并行的方式思考（Thinking in Parallel）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#隐藏复杂性（Hiding-Complexity）"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">隐藏复杂性（Hiding Complexity）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#演化形式（Evolution）-1"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">演化形式（Evolution）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BYNET的巨大贡献（The-BYNET’s-Considerable-Contribution）"><span class="post-toc-number">4.</span> <span class="post-toc-text">BYNET的巨大贡献（The BYNET’s Considerable Contribution）</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+
+<!-- header_home -->
+
+<!-- header_home -->
+<div class="material-index mdl-grid" style="margin-top: -145px;padding-left: 10px;padding-bottom: 80px;">
+    <a href="/">
+        <img src="/img/instore.top.png" alt="logo" />
+    </a>
+</div>
+
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            生来并行，天生超越——MPP架构原理及实现
+        </p>
+    </div>
+
+	
+
+
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Liang3p</strong>
+        <span>2月 25, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/MPP/">MPP</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Teradata/">Teradata</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/翻译/">翻译</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=生来并行，天生超越——MPP架构原理及实现&url=http://instore.top//2017/02/25/生来并行，天生超越——MPP架构原理及实现/index.html&via=Liang3p" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://instore.top//2017/02/25/生来并行，天生超越——MPP架构原理及实现/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=生来并行，天生超越——MPP架构原理及实现&url=http://instore.top//2017/02/25/生来并行，天生超越——MPP架构原理及实现/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>这篇文章将带你深入探讨MPP架构核心计算引擎的原理和实现。文章来源于Teradata技术白皮书《<a href="http://assets.teradata.com/resourceCenter/downloads/WhitePapers/EB3053_new.pdf" target="_blank" rel="external">Born to be Parallel, and Beyond</a>》，是<em>Born to be Paralle</em>系列白皮书的最新版本，感兴趣的话可以查看这个<a href="http://fmsi.biz/transparency/documents/Teradata/Born_to_be_Parrallel.pdf" target="_blank" rel="external">历史版本</a>，这是博主读过的第一个版本。<br>为便于更多读者阅读，博主对原文做了中文翻译。</p>
+<p>[TOC]</p>
+<blockquote>
+<p><strong>标题：生来并行，天生超越——Teradata持久的性能优势</strong><br><strong>原文标题：Born to be Parallel, and Beyond——Teradata’s Enduring Performance Advantage</strong></p>
+</blockquote>
+<h2 id="序（Introduction）"><a href="#序（Introduction）" class="headerlink" title="序（Introduction）"></a>序（Introduction）</h2><p>When you hear about the Teradata Database these days it is often with an emphasis on recently-implemented,highly-visible features, such as Teradata QueryGrid or Unified Data Architecture. This paper asks you to step back in time, say to the early 80’s, when Teradata Database was first emerging from its startup days. Focus your attention for a moment on the original foundation and key characteristics of what was at that time a new parallel database.<br>近期当你听到Teradata数据库时，通常都是在强调已经实现的，高度可见的特性，如Teradata QueryGrid或统一数据架构(UDA,Unified Data Architecture)。本文带你退一步的时间，回到80年代初，当Teradata数据库首次出现启动的那天。把注意力集中在一个新的并行数据库上的原始基础和关键特性上。</p>
+<p>The basic building blocks that were put in place initially remain in place, and they continue to elevate and extend the major advantages of Teradata Database today. Teradata Database’s surprisingly enduring performance advantage is a direct result of these early, somewhat unconventional design decisions made by a handful of imaginative architects.<br>最初构建的基本模块仍然保持在原位，他们不断提升和扩展Teradata数据库的主要优势直到今天。Teradata数据库惊人的持久的的性能优势是这些早期的就由少数富有创造力的架构师的一些非常规的设计决策的直接结果。</p>
+<p>This paper describes and illustrates some of these key fundamental components of Teradata Database that are as critical to performance now as they were then, and upon which today’s new features and capabilities rest.<br>本文介绍和说明了Teradata数据库关键的基础组件及其当下的新特性和剩余的能力。这些基础组件的性能表现无论是对于当时还是现在都至关重要的。</p>
+<p>Discussions of these specific areas are included in this paper:</p>
+<ul>
+<li>Multidimensional parallel capabilities</li>
+<li>A parallel-aware query optimizer</li>
+<li>The BYNET’s considerable contribution</li>
+<li>A flexible and fast way to find and store data</li>
+<li>Internal self-regulation of the flow of work</li>
+<li>Managing the flow of work externally with Workload Management</li>
+</ul>
+<p>本文将讨论这些特定范围:</p>
+<ul>
+<li>多维并行能力</li>
+<li>查询优化器功能</li>
+<li>BYNET的巨大贡献</li>
+<li>一个灵活、快捷的方法来查找和存储数据</li>
+<li>管理工作流和工作负载管理</li>
+</ul>
+<p>The scope of this whitepaper is limited to important,foundational components of the database. It is not a comprehensive discussion of all the aspects of Teradata Database.<br>这个白皮书的范围仅限于重要,基础数据库的组件。这不是一个全面的讨论Teradata数据库的所有方面的文档。</p>
+<p>There have been several important capabilities introduced over the years that rest on top of that foundation, but that are not discussed in this paper. They include user-defined functions, table operators, data types like XML, JSON/BSON/UBJSON for semi-structured data, geospatial, columnar, temporal, Teradata Intelligent Memory, and inmemory optimizations.<br>此外还有几个多年来在基础上的重要的功能,但这不在本文的讨论范围。它们包括用户定义函数,表操作,数据类型如XML、JSON/BSON/UBJSON半结构化数据的处理、地理空间,列存储,临时表,Teradata智能内存和内存优化。</p>
+<h2 id="多维并行能力（Multidimensional-Parallel-Capabilities）"><a href="#多维并行能力（Multidimensional-Parallel-Capabilities）" class="headerlink" title="多维并行能力（Multidimensional Parallel Capabilities）"></a>多维并行能力（Multidimensional Parallel Capabilities）</h2><p>Emerging in the late 1970’s, Teradata Database was the first commercially available SQL-based “parallel processing” machine designed from the base up to support user business queries. Since then, parallel processing has become a necessity for any serious database offering, as demand for data analytics continues to drive even higher volumes, greater numbers of users, and more real-time performance.</p>
+<p>在1970年代后期的Teradata数据库是当时第一个在商业上可用的基于SQL从基础设计到支持用户业务查询都支持并行处理的数据库产品。自那时以来，并行处理已成为任何严谨的数据库必要支持的特性，因为数据分析的需求继续推动更高的容量，更多的用户数量，更实时的性能。</p>
+<p>With a design goal of eliminating single-threaded operations, the original architects of Teradata Database parallelized everything, from the entry of SQL statements to the smallest detail of their execution. The database’s entire foundation was constructed around the idea of giving each component in the system many look-alike counterparts. Not knowing where the future bottlenecks might spring up, early developers weeded out all possible single points of control and effectively eliminated the conditions that can breed gridlock in a system.<br>基于消除单线程操作的设计目标,最初的架构师从SQL语句入口到语句执行的最小细节并行化了Teradata数据库所有内容。整个数据库的基础都是围绕着每个组件在系统中并行构建的许多看起来相似的组件。不知道未来的瓶颈会在何处涌现,早期开发者淘汰所有可能的单点控制,有效地消除了系统中会导致僵局的条件。</p>
+<p>Limitless interconnect pathways, and multiple optimizers, host channel connections, gateways, and units of parallelism are supported in Teradata, increasing flexibility and control over performance that is crucial to large-scale data analytics today.<br>Teradata支持无限互连通路、多个优化器、主机通道连接、网关和并行单元，增加灵活性和控制性能，是今天的大规模数据分析的关键。</p>
+<p>Teradata’s basic unit of parallelism is the AMP (Access Module Processor), a virtual processing unit that manages all database operations for its portion of a table’s data. Many AMPs are typically configured on a given node. From 20 to 40 or more AMPs per node is common today.<br>Teradata并行的基本单位是AMP(Access Module Processor,访问模块处理器),一个虚拟处理单元管理所有数据库操作的部分一个表的数据。一个给定的节点通常会配置许多个AMP。每个节点从20到40或多个AMP在今天是很常见的。</p>
+<p>Once configured, data loads, backups, index builds, in fact everything that happens in a Teradata system, is distributed across a pre-defined number of AMPs. The parallelism is predictable and understandable.<br>一旦配置，数据加载、备份、索引生成，事实上一切都在Teradata系统发生的，分布在一个预先定义好数量的AMP上。并行性是可预测的和可理解的。</p>
+<p>Each AMP acts like a microcosm of the database, supporting such things as data loading, reading, writing, journaling and recovery for all the data that it owns (see Figure 1). The parallel units also have knowledge of each other and work cooperatively together behind the scenes. This teamwork among parallel units is an unusual strength of Teradata Database, driving higher performance with minimal overhead.<br>每个AMP的行为像数据库的一个缩影，支持对其拥有的数据进行诸如数据加载、读取、写入、日志和恢复操作（见图1）。并行单元之间互相了解，在幕后共同合作。这个团队之间的并行单元以最小的开销高性能驱动着是Teradata数据库的一个不寻常的力量。</p>
+<h3 id="查询并行的类型（Types-of-Query-Parallelism）"><a href="#查询并行的类型（Types-of-Query-Parallelism）" class="headerlink" title="查询并行的类型（Types of Query Parallelism）"></a>查询并行的类型（Types of Query Parallelism）</h3><p>While the AMP is the fundamental unit of parallelism, there are two additional parallel dimensions woven into Teradata Database, specifically for query performance. These are referred to here as “within-a-step” parallelism, and “multi-step” parallelism. The following sections describe these three dimensions of parallelism:<br>尽管AMP是并行处理的基本单位，此外仍然有两个额外的平行维度编织到Teradata数据库，特别是查询性能。这些被提到的两个维度就是单步并行（within-a-step）和多步并行（multi-step）。下面的部分描述了这三个维度的并行性：</p>
+<h4 id="跨越AMP并行执行（Parallel-Execution-Across-AMPs）"><a href="#跨越AMP并行执行（Parallel-Execution-Across-AMPs）" class="headerlink" title="跨越AMP并行执行（Parallel Execution Across AMPs）"></a>跨越AMP并行执行（Parallel Execution Across AMPs）</h4><p>Probably the most recognizable type of parallelism is parallel execution across multiple AMPs. It involves breaking the request into subdivisions, and working on each subdivision at the same time, with one single answer delivered. Parallel execution can incorporate all or part of the operations within a query, and can significantly reduce the response time of an SQL statement, particularly if the query reads and analyzes a large amount of data.<br>最知名的并行类型是跨越多个AMP的并行执行。这种并行包含多个分支，这些分支是由查询请求拆分而来的，每个分支同时工作，最后交付一个查询结果。并行执行可以在一个查询中包含全部或部分的操作,并能显著降低SQL语句的响应时间,特别是查询需要读取和分析大量的数据时。</p>
+<p>Parallel execution is usually enabled in Teradata by hash-partitioning the data across all the AMPs defined in the system. Once data is assigned to an AMP, the AMP provides all the database services on its allocation of data blocks. All relational operations such as table scans, index scans, projections, selections, joins, aggregations, and sorts execute in parallel across the AMPs simultaneously. Each operation is performed on an AMP’s data independently of the data associated with the other AMPs.<br>在Teradata并行执行通常是将表数据在系统中定义的所有AMPs中进行哈希分布。一旦数据被分配给一个AMP,AMP就其分配到的数据块提供了所有的数据库服务.所有关系表扫描等操作,索引扫描、预测、选择、关联、聚合以及排序都是同时并行地执行在所有被分配数据块的AMP上。对AMP的数据块的每个操作与其他相关联的AMP数据块的操作是独立执行的。</p>
+<p><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715478.png" alt="图片1"></p>
+<h4 id="单步并行（Within-a-Step-Parallelism）"><a href="#单步并行（Within-a-Step-Parallelism）" class="headerlink" title="单步并行（Within-a-Step Parallelism）"></a>单步并行（Within-a-Step Parallelism）</h4><p>A second dimension of parallelism that will naturally unfold during query execution is an overlapping of selected database operations referred to here as withina-step parallelism. The optimizer splits an SQL query into a small number of high level database operations called “steps” and dispatches these distinct steps for execution to the AMPs, one after another.<br>第二维度的并行处理在执行重叠的选定的数据库操作时会自然地展开，这里称为单步并行(within-a-step)。优化器将一个SQL查询分为少数高级数据库操作称为“步骤”,将这些不同的步骤执行一个接一个分配到AMP上。</p>
+<p>A step can be a small piece or a large chunk of work. It can be simple, such as “scan a table and return the result” or complex, such as “scan two tables and apply predicates to each, join the two tables, redistribute the join result on specified columns, sort the redistributed rows, and place the redistributed rows in an intermediate table.”<br>一步可以是一小片或一大块工作。它可以很简单，如“扫描一个表并返回结果”，或复杂的，如“扫描两个表和应用谓词,关联两个表,将指定列的关联结果重分布，对重分布数据行排序，并将重分布的数据写入一个中间表。”</p>
+<p>Within each of these potentially large chunks of work that we call steps, multiple relational operations can be processed in parallel by pipelining. While a table scan is taking place, rows that are selected from the scan can be pipelined into a join process immediately. Pipelining is the ability to begin one task before its predecessor task has completed and will take place whenever possible within each distinct step (see Figure 2).<br>在我们称之为步骤的这些潜在的大块工作中，可以通过流水线并行处理多个关系操作。当表扫描正在发生时，从扫描中选择的行可以立即流水线化为联接过程。流水线是在其前任务完成之前开始一项任务的能力，并将在每一个不同的步骤中尽可能地进行（见图2）。</p>
+<p>/<em> pipelined 管道？ </em>/</p>
+<p><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715559.png" alt="图片2"></p>
+<p>This dynamic execution technique, in which a second operation jumps off of a first one to perform portions of the step in parallel, is key to increasing the basic query parallelism. The relational-operator mix of a step is carefully chosen by the Teradata optimizer to avoid stalls within the pipeline.<br>这种动态执行技术,第二个操作跳跃到第一个步骤与其并行执行,是增加基本查询并行性的关键。一个步骤的关系操作符组合是通过Teradata优化器避免流水线中断而精心挑选的。</p>
+<h4 id="多步并行（Multi-Step-Parallelism）"><a href="#多步并行（Multi-Step-Parallelism）" class="headerlink" title="多步并行（Multi-Step Parallelism）"></a>多步并行（Multi-Step Parallelism）</h4><p>Multi-step parallelism is enabled by executing multiple “steps” of a query simultaneously, across all the participating units of parallelism in the system. One or more tasks are invoked for each step on each AMP to perform the actual database operation. Multiple steps for the same query can be executing at the same time to the extent that they are not dependent on results of previous steps. Figure 3 is a representation of how all of these three types of parallelism might appear in a query’s execution.<br>多步并行允许在系统中所有的并行单元对一个查询同时执行多个“步骤”。每个AMP上的每一步都要调用一个或多个任务来执行实际的数据库操作。同一查询的多个步骤可以在同一时间执行，它们不依赖于先前步骤的结果。图3是在查询执行过程中可能出现的所有这三种并行类型的实例。<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715614.png" alt="图片3"><br>The figure shows four AMPs supporting a single query’s execution, and the query has been optimized into 7 steps. Step 1.2 and Step 2.2 each demonstrate within-a-step parallelism, where two different tables are scanned and joined together (three different operations are performed). The result of those three operations is pipelined into a sort and then a redistribution, all in one step. Steps 1.1 and 1.2 together (as well as 2.1 and 2.2 together) demonstrate multi-step parallelism, as two distinct steps are chosen to execute at the same time, within each AMP.<br>图中显示了四个AMP如何支持单个查询的执行，并将查询优化为7个步骤。步骤1.2和步骤2.2是单步并行（within-a-step）的实例，两个不同的表扫描和关联在一起（执行了三种不同的操作）。这三个操作的结果是将排序，然后重分布并入处理流程，全部都在一个步骤完成。步骤1.1和1.2一起（以及2.1和2.2一起）是多步并行（multi-step）的实例，被选择作为两个不同的步骤在每个AMP上在同时执行。</p>
+<p>This multifaceted parallelism is not easy to choreograph unless it is planned for in the early stages of product evolution. An optimizer that generates three dimensions of parallelism for one query, such as described here, must be intimately familiar with all the parallel capabilities that are available and know how and when to use them. But most importantly, Teradata Database applies these multiple dimensions of parallelism automatically, without user intervention or special setup.<br>这多方面的并行不易编排，除非是在产品的早期演化阶段已经计划好的。优化器为一个查询生成三个维度的并行，如这里所描述的，必须熟悉所有可用的并行功能，知道如何以及何时使用它们。而最重要的是，Teradata数据库自动应用这些多维度的并行，无需用户干预或特殊的设置。</p>
+<h3 id="多语句的请求（Multi-Statement-Requests）"><a href="#多语句的请求（Multi-Statement-Requests）" class="headerlink" title="多语句的请求（Multi-Statement Requests）"></a>多语句的请求（Multi-Statement Requests）</h3><p>In addition to the three dimensions of parallelism shown in Figure 3, Teradata Database offers an SQL extension called a Multi-Statement Request that allows several distinct SQL statements to be bundled together and sent to the optimizer as if they were one unit. Teradata Database will attempt to execute these SQL statements in parallel, as long as there are no dependencies among the statements.<br>除了如图3所示的三个维度的并行结构，Teradata数据库提供了一个SQL扩展名为多语句请求允许几个不同的SQL语句被捆绑在一起就如他们是一个单元发送到向优化器。Teradata数据库将尝试并行执行这些SQL语句，只要其中的语句不依赖。</p>
+<p>When this feature is used, any sub-expressions that the different SQL statements have in common will be executed once, and the results shared among them. Known as common sub-expression elimination, this means that if six select statements were bundled together into a single request, and all contained the same sub-query, that subquery would only be executed once. Even though these SQL statements are executed in an interdependent, overlapping fashion, each query in a multi-statement request will return its own distinct answer set (see Figure 4).<br>使用此功能时，不同的子表达式中任何具有相同的SQL表达都将一次执行，并且执行的结果将被共享。所谓公共子表达式消除，意味着如果六个SELECT语句都被捆绑到一个单一的请求，以及所有包含相同的子查询，子查询只执行一次。尽管这些SQL语句是在一个相互依存、重复执行的方式，在多语句的请求中每个查询将返回各自不同的结果集（见图4）。<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715659.png" alt="图片4"></p>
+<h3 id="演化形式（Evolution）"><a href="#演化形式（Evolution）" class="headerlink" title="演化形式（Evolution）"></a>演化形式（Evolution）</h3><p>Many features have been added to the Teradata Database over the years that take advantage of the database’s inherent parallelism. Things like the FastExport utility, which pulls large volumes of data out of the database across all AMPs in parallel, or ordered analytic functions, that perform complex windowing on top of the parallel foundation are a few examples.<br>在过去的几年里，利用数据库中固有的并行性，许多功能已被添加到Teradata数据库。比如FastExport实用工具，在数据库所有AMP上并行地拉取大量数据。再例如已定义好的分析函数，复杂地窗口函数在并行地基础上执行，这些是小部分例子。</p>
+<p>Teradata QueryGrid, a more recent feature relies on Teradata Database parallelism as well when accessing rows from a foreign server. The QueryGrid feature provides a single interface to combine data across different systems (including heterogeneous systems), minimizing the need for data duplication.<br>Teradata QueryGrid，最近的一个特性。它依赖Teradata数据库的并行性，从外部服务器访问数据行。QueryGrid的特性是提供了统一的接口将不同系统的数据结合起来（包括异构系统），减少数据重复的需要。</p>
+<p>For example, with QueryGrid you can issue queries from a Teradata Database that access, filter, and return rows from a Hadoop platform. You can then join data from Teradata tables to those rows brought in from Hadoop, if required, all in a single SQL statement.<br>例如，你可以用QueryGrid从Teradata数据库的访问，过滤查询，并从Hadoop平台返回数据。然后你可以关联Teradata表数据和从Hadoop接入的数据，如果需要的话，都在一个单一的SQL语句完成。</p>
+<p>The parallelism of the Teradata Database contributes to the performance of QueryGrid when a moderate or a large number of rows are being accessed from a foreign server. Multiple streams of data can be brought over from Hadoop in parallel, directly connecting to and coming to rest on different AMPs in the Teradata configuration. Each AMP receives and spools its subset of the Hadoop data. All AMPs are working in parallel as though taking in and processing the data that just arrived from Hadoop was part of just another query step. Without the indigenous parallelism of the Teradata Database, QueryGrid could not offer the same level of efficiencies when importing data from a foreign server.<br>当中等或大量数据正在从外部服务器访问时，Teradata数据库的并行性有助于QueryGrid的性能。多个来自Hadoop的数据流可以并行地直接连接，分配到剩余的不同的在Teradata配置的AMP中。每个AMP接收和缓存Hadoop的数据子集。所有的AMP并行工作时，输入和处理从Hadoop刚刚到达的数据，仿佛只是另一个查询的步骤的一部分。没有Teradata数据库原生的并行能力，加载外部服务器数据时，QueryGrid无法提供相同的效率水平。</p>
+<h2 id="并行感知优化器（Parallel-Aware-Optimizer）"><a href="#并行感知优化器（Parallel-Aware-Optimizer）" class="headerlink" title="并行感知优化器（Parallel-Aware Optimizer）"></a>并行感知优化器（Parallel-Aware Optimizer）</h2><p>Having an array of parallel techniques can turn into a disadvantage if they are not carefully applied around the needs of each particular request. Envisioning the power of these combined dimensions of parallelism, early architects of Teradata Database constructed a query optimizer that was fully in tune with these choices and had the smarts to know when and how to apply them.<br>如果不谨慎应用于每个特定请求的需要，拥有一系列并行技术可能会变成一个劣势。想象这些组合的多个维度的并行的能力，Teradata数据库早期的架构师建造了完全符合这些选择的很聪明的并知道何时及如何应用查询优化器。</p>
+<h3 id="关联计划（Join-Planning）"><a href="#关联计划（Join-Planning）" class="headerlink" title="关联计划（Join Planning）"></a>关联计划（Join Planning）</h3><p>When the optimizer begins the task of building a query plan, one of its goals is to maximize the throughput of this particular piece of work. Think of a query that has to access six tables to build its answer set. One of the jobs of the optimizer is to determine which tables to access and join first, and which tables to access and join later in the plan. It also has to consider what type of join to use to bring the rows of two tables together, and the method of accessing each table (indexed access or table scan, for example).<br>当优化器开始创建一个查询计划的任务时，它的一个目标就是最大化这个特定工作的吞吐量。考虑一个查询，它必须访问六个表才能建立其结果集。优化器的工作之一是确定首先要访问和关联的表，以及哪些表在以后的计划中访问和加入。它还必须考虑使用哪种类型的关联来将两个表的行连起来，以及访问每个表（例如索引访问或表扫描）的方法。</p>
+<p>One unique capability built into the original Teradata optimizer is the ability to access and join multiple tables simultaneously, constructing a wide or “bushy” query plan, rather than a serial one-join-at-a-time plan. Those six tables discussed above could be joined in a strictly linear fashion: join table1 to table2, then join their result to table3, then join their result to table4, etc. as shown in Figure 5. This will spread the resource usage required by the query over a longer period of time, potentially impacting elapsed time.<br>一个建立在原有的Teradata优化器之上的独特的能力是同时访问和关联多个表的能力，构建一个宽或“繁茂”的查询计划，而不是一个连续的“一次执行一个关联”（one-join-at-a-time）的计划。以上这六个表讨论可以是一个严格的线性方式的关联：关联table1和table2，然后将结果表与table3关联，然后z再关联他们的结果表，依此类推。如图5所示。这将在较长时间内延长查询所需使用的资源，可能会影响查询耗时。</p>
+<p><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715704.png" alt="图片5"><br>Teradata’s optimizer seeks out tables within the query that have logical relationships between them, such as Items and Orders in Step 2.2 of Figure 3. It also groups tables that can be accessed and joined independently from the other subsets of tables. Those are often candidates to execute within parallel steps. Figure 5 illustrates the differences when optimizing a six-table join between a plan that is restricted to linear joins, and one that has the option of performing some of the joins in parallel.<br>Teradata优化器寻求表内它们之间的逻辑关系的查询，如图3的2.2步骤的条目和命令。它还可以与其他表子集独立地访问和连接。这些往往是执行并行执行的候选步骤。图5说明了在仅限于线性连接的计划中优化了六个表关联和一个具有执行并行关联的选择的差异。</p>
+<h3 id="估量环境（Sizing-up-the-Environment）"><a href="#估量环境（Sizing-up-the-Environment）" class="headerlink" title="估量环境（Sizing up the Environment）"></a>估量环境（Sizing up the Environment）</h3><p>But understanding the dimensions of parallelism by itself was found to be inadequate when it came to creating an optimizer suitable for complex queries on a parallel database. Early optimizer architects made sure that other “environmental” factors were considered during plan building as well.<br>但是，了解并行本身的尺寸被发现是不够的，当它来创建一个在并行数据库适用于复杂的查询优化器时。早期优化架构师确保其他“环境”的因素同时考虑在计划建设中。</p>
+<p>The optimizer knows about the number of AMPs and the number of nodes in the current configuration. It considers the processing power of the hardware, and uses costing algorithms in devising estimated costs of potential plans. Putting all this information together, the optimizer comes up with a price in terms of resources expected to be used for each of several candidate query plans, then picks the least costly candidate. The lowest cost plan is the plan which will take the least system resources to execute. These final cost estimates are externalized in prose-like query “explain” text, for the user to read.<br>优化器知道AMP数和当前配置中的节点数。它将考察硬件的处理能力，并使用成本计算算法计算潜在计划的估计成本。把所有这些信息放在一起，优化器会根据预期的资源使用一些候选查询计划，然后选择最便宜的候选计划。最低成本计划是以最少的系统资源来执行的计划。这些最后的成本估计是体现在啰嗦的查询“解释”文本中供用户阅读。</p>
+<p>An important piece of information that the optimizer always looks for when building a plan is statistics: data demographics about the tables and columns that participate in a query. This statistical data, which is stored as histograms in the data dictionary, helps to determine what the best order of joins, and it helps the optimizer assess the size of the data set that results from joining two tables. This information is used to select the best method of implementing the joins.<br>优化器在创建计划时总是寻找的重要信息是统计数据：参与查询的表和列的数据统计数据。这个统计数据，以直方图形式存储在数据字典中，有助于确定最好的关联顺序，它有助于优化评估的关联结果数据集的大小。此信息用于选择实现关联的最佳方法。</p>
+<h3 id="以并行的方式思考（Thinking-in-Parallel）"><a href="#以并行的方式思考（Thinking-in-Parallel）" class="headerlink" title="以并行的方式思考（Thinking in Parallel）"></a>以并行的方式思考（Thinking in Parallel）</h3><p>The Teradata optimizer was born into a parallel world. Because it was built on top of a shared-nothing architecture, it has been forced to think with a completely parallel mind set.<br>Teradata优化器出生在一个并行的世界。因为它是建立在一个无共享架构的顶部，它被迫用一个完全并行的思维定势思考。</p>
+<p>For example, before it settles on a step that does a table duplication the optimizer evaluates the number of AMPs that the table will be copied to, estimates the number of rows that will be fanned out, and considers the total data load across the BYNET. Then it gives that an estimated cost and compares it to other alternatives that might involve less movement of data or a different join order. Its entire focus is to deliver a query plan that will execute a user-submitted query with the least possible effort.<br>例如，在完成一个复制表步骤之前，优化器会评估表将被复制到AMP的数量，估计会展开的行数，并考虑通过BYNET总的数据负载。然后，它给出了一个估计的成本，并比较其他可能涉及较少的移动数据或不同的连接顺序的替代方案。它的整个重点是提供一个查询计划，将一个用户提交的查询尽可能少的努力去执行。</p>
+<h3 id="隐藏复杂性（Hiding-Complexity）"><a href="#隐藏复杂性（Hiding-Complexity）" class="headerlink" title="隐藏复杂性（Hiding Complexity）"></a>隐藏复杂性（Hiding Complexity）</h3><p>One thing customers have always liked about Teradata Database’s optimizer is that it alleviates the user who submits the query from having to get involved in directing the query plan. Optimization happens behind the scenes and all influence over a plan, other than which statistics to collect, is taken out of the hands of the user. There is complete freedom to submit very complex ad hoc analytic queries, or canned tactical dashboard queries, or quick single-row look-up queries, because the optimizer will adjust to whatever is thrown at it.<br>一个客户一直喜欢Teradata数据库的优化器的缘由是，它缓解了提交查询的用户不得不参与指导查询计划的问题。在幕后发生的优化和一个计划所有的影响，不是收集的统计数据得到的，而是从用户手中拿出来的。用户有完全自由去提交非常复杂的即席查询，或包含战术仪表板查询，或快速单行Look up查询，因为优化器将调整到任何扔在查询请求中的内容。</p>
+<h3 id="演化形式（Evolution）-1"><a href="#演化形式（Evolution）-1" class="headerlink" title="演化形式（Evolution）"></a>演化形式（Evolution）</h3><p>Many years of feedback and experience with the Teradata data warehouse users has helped developers discover ways to enhance the optimizer capabilities to better meet real-world needs. During this evolution, existing components are often expanded or used in a new way, without the need to start all over or change the underlying foundation. Row-IDs, for example, were repurposed so they could support no primary index tables and were expanded from the original 8 bytes to 16 bytes in order to support new table partitioning opportunities.<br>多年的反馈和Teradata数据仓库的用户体验帮助开发者发现提升优化能力更好地满足现实需要的方式。在这种演变过程中，现有的组件往往以新的方式扩展或使用，而不需要从头开始或改变基础。例如Row-ID，被重新利用使得他们可以支持无主索引表和从原来的8个字节扩大为16字节以支持新的表分区的机会。</p>
+<p>There has been a continuous stream of new optimizer features over the last 30 years, all building on the original foundation. Some of the key ones include:</p>
+<ul>
+<li>More sophisticated statistics collection options, including sampling, thresholds for recollections, and optimizer-initiated statistics collection skipping.</li>
+<li>Extrapolation of statistical information at run-time when statistic collections are outdated.</li>
+<li>Join indexes (materialized views) synchronized with base tables whose access is managed by the optimizer.</li>
+<li>New types of joins, including a star join that brings together unrelated small tables first before joining to a fact table, and in-memory hash joins to take advantage of in-memory processing possible on today’s large memory processors.</li>
+<li>Incremental Planning and Execution (IPE), where the optimizer builds a partial plan, executes that first fragment, then based on the output of the first fragment, builds and optimizes the second and subsequent fragments.</li>
+</ul>
+<p>过去30年中，新的优化功能不断被加入到优化其中来，所有的功能都是在原始的基础上建设的。一些关键的特性包括：</p>
+<ul>
+<li>更复杂的统计收集选项，包括抽样、重新统计的阈值和跳过优化器启动统计收集。</li>
+<li>运行时当统计信息过时时的统计推断。</li>
+<li>将索引（实化视图）与由优化器管理的基础表同步连接。</li>
+<li>新类型的连接，包括一个星形联接，在加入到一个事实表之前，首先汇集不相关的小表，并在内存哈希联接中利用在今天的大内存处理器上可能进行的内存处理。</li>
+<li>增量计划和执行（IPE），在优化建立部分计划，执行第一个片段，然后根据第一片段的输出，建立并优化了第二片段和随后的片段。</li>
+</ul>
+<h2 id="BYNET的巨大贡献（The-BYNET’s-Considerable-Contribution）"><a href="#BYNET的巨大贡献（The-BYNET’s-Considerable-Contribution）" class="headerlink" title="BYNET的巨大贡献（The BYNET’s Considerable Contribution）"></a>BYNET的巨大贡献（The BYNET’s Considerable Contribution）</h2><p>Teradata Database was designed as a shared-nothing architecture, the hardware as well as the software. AMPs and parsing engines(PE) operate in isolation from one another. Messages are the means of communication among these many moving parts and the interconnect is the glue that holds the pieces together and speeds along all of the parallel activities that are running on the Teradata Database (see Figure 6).<br>Teradata数据库被设计为无共享的体系结构、硬件以及软件。AMPS和解析引擎（PE）彼此隔离工作。信息（Messages）是这些运动部件之间的通信手段，内部互连是把碎片拼起来的胶水，在所有这一切都在Teradata数据库高速运行的并行活动中（见图6）。<br><img src="http://cgcnm.img48.wal8.com/img48/564134_20161226164230/148807715744.png" alt="图片6"></p>
+
+	
+	
+	
+	
+</div>
+
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/02/25/生来并行，天生超越——MPP架构原理及实现/" 
+            data-url="http://instore.top/2017/02/25/生来并行，天生超越——MPP架构原理及实现/"
+            data-title="生来并行，天生超越——MPP架构原理及实现"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/02/25/统一数据模型(Unified LDM)介绍/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Liang3p's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        liang3p@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="mailto:liang3p@gmail.com" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">3</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">7</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/liang3p" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/profile.php?id=100011242741015" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://plus.google.com/115291231508178529929" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    <a href="http://weibo.com/2837545975" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+        <span class="visuallyhidden">Weibo</span>
+    </button></a>
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;instore.top | Learn More, Share More.</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"instore"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+		
+    </body>
+		
+	
+</html>

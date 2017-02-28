@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://instore.top/"/>
-  <updated>2017-02-25T04:30:22.047Z</updated>
+  <updated>2017-02-28T04:03:52.598Z</updated>
   <id>http://instore.top/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>生来并行，天生超越——MPP架构原理及实现</title>
+    <link href="http://instore.top/2017/02/25/%E7%94%9F%E6%9D%A5%E5%B9%B6%E8%A1%8C%EF%BC%8C%E5%A4%A9%E7%94%9F%E8%B6%85%E8%B6%8A%E2%80%94%E2%80%94MPP%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://instore.top/2017/02/25/生来并行，天生超越——MPP架构原理及实现/</id>
+    <published>2017-02-25T07:16:54.657Z</published>
+    <updated>2017-02-28T04:03:52.598Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章将带你深入探讨MPP架构核心计算引擎的原理和实现。文章来源于Teradata技术白皮书《&lt;a href=&quot;http://assets.teradata.com/resourceCenter/downloads/WhitePapers/EB3053_new.pdf&quot; 
+    
+    </summary>
+    
+      <category term="数据仓库" scheme="http://instore.top/categories/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+    
+      <category term="Teradata" scheme="http://instore.top/tags/Teradata/"/>
+    
+      <category term="MPP" scheme="http://instore.top/tags/MPP/"/>
+    
+      <category term="翻译" scheme="http://instore.top/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
   
   <entry>
     <title>统一数据模型(Unified LDM)介绍</title>
