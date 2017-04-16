@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Title -->
+    
+    <title>
+        从数据到决策：建设数据仓库的数据治理体系 | instore.top | Learn More, Share More.
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Liang3p">
+    <meta name="description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="instore.top | Learn More, Share More.">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://instore.top">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="从数据到决策：建设数据仓库的数据治理体系 | instore.top | Learn More, Share More.">
+    <meta property="og:description" content="Learn More, Share More.--We are not exactly sure what is in store for us, but we know that sharing ideas keeps us moving on. I wish everyone have the big surprise InStore.">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据治理的必要性"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">数据治理的必要性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据管控的问题"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">数据管控的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据治理解决方案"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">数据治理解决方案</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据管控的层面"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">数据管控的层面</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据标准"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据标准</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文档管理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">文档管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#信息项管理"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">信息项管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标准代码定义"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">标准代码定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#主数据定义"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">主数据定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据规则管理"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">数据规则管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用代码标准符合性检查"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">应用代码标准符合性检查</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据质量"><span class="post-toc-number">3.</span> <span class="post-toc-text">数据质量</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据质量综合评估"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">数据质量综合评估</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据质量问题分析"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">数据质量问题分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据质量问题管理"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">数据质量问题管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据质量知识管理"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">数据质量知识管理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#元数据管理"><span class="post-toc-number">4.</span> <span class="post-toc-text">元数据管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#技术元数据"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">技术元数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#业务元数据"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">业务元数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CWM元模型"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">CWM元模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#元数据管理系统设计"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">元数据管理系统设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#参考体系架构"><span class="post-toc-number">4.4.1.</span> <span class="post-toc-text">参考体系架构</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#功能需求"><span class="post-toc-number">4.4.2.</span> <span class="post-toc-text">功能需求</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#元数据质量管理"><span class="post-toc-number">4.4.3.</span> <span class="post-toc-text">元数据质量管理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#元数据服务接口"><span class="post-toc-number">4.4.4.</span> <span class="post-toc-text">元数据服务接口</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#元数据应用"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">元数据应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主数据管理"><span class="post-toc-number">5.</span> <span class="post-toc-text">主数据管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据建模"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">数据建模</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据整合集成"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">数据整合集成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据维护"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">数据维护</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据安全"><span class="post-toc-number">6.</span> <span class="post-toc-text">数据安全</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#系统安全"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">系统安全</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应用安全"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">应用安全</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#信息安全"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">信息安全</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#访问控制"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">访问控制</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据服务"><span class="post-toc-number">7.</span> <span class="post-toc-text">数据服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#访问渠道"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">访问渠道</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据内容"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">数据内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#推送服务"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">推送服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求管控"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">需求管控</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">8.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+
+<!-- header_home -->
+
+<!-- header_home -->
+<div class="material-index mdl-grid" style="margin-top: -145px;padding-left: 10px;padding-bottom: 80px;">
+    <a href="/">
+        <img src="/img/instore.top.png" alt="logo" />
+    </a>
+</div>
+
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		<!-- Custom Thumbnail -->
+		<div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://ww1.sinaimg.cn/large/a92183f7gy1fe2hcoythqj20zo08q0x4.jpg)">
+	
+        <p class="article-headline-p">
+            从数据到决策：建设数据仓库的数据治理体系
+        </p>
+    </div>
+
+	
+
+
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Liang3p</strong>
+        <span>3月 27, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/主数据管理/">主数据管理</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/元数据管理/">元数据管理</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据建模/">数据建模</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据标准/">数据标准</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/数据治理/">数据治理</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    
+    
+    
+    
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=从数据到决策：建设数据仓库的数据治理体系&url=http://instore.top//2017/03/27/从数据到决策：建设数据仓库的数据治理体系/index.html&via=Liang3p" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+    
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://instore.top//2017/03/27/从数据到决策：建设数据仓库的数据治理体系/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+    
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=从数据到决策：建设数据仓库的数据治理体系&url=http://instore.top//2017/03/27/从数据到决策：建设数据仓库的数据治理体系/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+</ul>
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p><strong>数据治理</strong>是对企业数据资源进行管控治理的组织结构策略和方法论。它将企业中跨部门、跨功能的团队联合起来，组成解决数据资源问题的统一战线，构建了一切信息流程的权责体系，使业务和IT共同解决关键的数据问题。</p>
+<p>[TOC]</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p><strong>数据治理 - DGI (Data Governance Institute)</strong><br>“数据治理/管控是一个管理一切与信息有关的流程的权责体系；它的执行需按照一个经各方认可的、陈述何方在何种情形下、能以何种方式使用何种信息、进行何种行动的机制来进行。”</p>
+</blockquote>
+<h3 id="数据治理的必要性"><a href="#数据治理的必要性" class="headerlink" title="数据治理的必要性"></a>数据治理的必要性</h3><p><strong>企业高效运营的需要</strong></p>
+<ul>
+<li>数据治理通过高质量的数据改善决策能力</li>
+<li>数据治理有助于企业发现商业机会</li>
+<li>数据治理有助于降低IT建设及运维成本</li>
+<li>高质量的数据对于企业业务系统的安全稳定运营极其关键</li>
+</ul>
+<p><strong>企业风险管理的需要</strong></p>
+<ul>
+<li>风险控制的应用受制于信息资源的规模和质量</li>
+<li>资产分类的准确性有助于降低风险</li>
+</ul>
+<p><strong>业务管理创新需要</strong></p>
+<ul>
+<li>有助于业务流程的改进，资源的优化，提高业务及管控能力</li>
+<li>高质量的数据是实现商业只能的基础，准确的分析数据有助于做出正确的业务及管理创新</li>
+</ul>
+<h3 id="数据管控的问题"><a href="#数据管控的问题" class="headerlink" title="数据管控的问题"></a>数据管控的问题</h3><p>企业发展到一定阶段时，数据管控方面普遍容易存在以下问题：</p>
+<ol>
+<li>数据多样化，缺少统一标准</li>
+<li>源数据变化造成数据平台数据混乱</li>
+<li>统计结果不准确、数据指标异常波动</li>
+<li>隐蔽性的数据质量问题，数据平台层次复杂、不能快速定位原因</li>
+<li>数据质量低下、应用定义不清、报表利用率低</li>
+<li>数据标准缺乏结构化管理，集成困难</li>
+<li>数据分散，形成信息孤岛，共享困难</li>
+<li>已然形成大数据，但针对其应用处理困难</li>
+<li>主数据安全</li>
+<li>缺少灾备、迁移、热切换，不能保障数据平台的高可用性</li>
+<li>缺少敏捷的需求管控机制、取数需求到数据获得流程繁冗，需求方需要的决策时间被延长</li>
+<li>数据生产完成后，需求方获取数据的渠道不够便捷，不能第一时间掌握需要的信息</li>
+<li>出了问题再补漏，数据管理部门和生产部门互相推脱责任</li>
+</ol>
+<p>综上，对问题进行分类梳理，不难发现企业在数据管控需要重点处理的问题包括：<strong>数据标准</strong>（1,2,5,14）、<strong>数据质量</strong>（3,4,5）、<strong>数据集成</strong>（6,7,8）、<strong>元数据管理</strong>（5,6,7,8）、<strong>主数据管理</strong>（1,2,7,8）、<strong>数据安全</strong>（9,10）、<strong>数据服务</strong>（11,12）、<strong>权责体系</strong>（13）。有些问题只是单个原因导致的，而还有部分问题的出现并不是由单方面的原因导致的，例如报表利用率低的原因可能是数据质量、指标定义不清晰（业务理解存在歧义）、获取数据的渠道不够便捷、业务理解不深入导致数据价值低下等。由此可见，单项的数据管控可以解决一部分问题，但是不能从根本上解决全部问题。</p>
+<h3 id="数据治理解决方案"><a href="#数据治理解决方案" class="headerlink" title="数据治理解决方案"></a>数据治理解决方案</h3><p>首先，明确数据管理核心目标是：保障核心业务正常运作，提升数据价值，深度挖掘数据应用价值。<br>然后，从数据生命周期的管控考虑，数据治理将主要集中在以下几个方面：</p>
+<ul>
+<li><strong>建立数据标准体系</strong><br>建立企业视角的通用数据标准，如客户定义、客户分类、客户信息等。分析梳理业务流程，设计业务主数据指标体系，形成数据标准规范。同时规范化管理构成数据平台的业务和技术基础设施，包括数据管控制度、流程规范文档、信息项定义等。</li>
+<li><strong>建立度量的数据质量稽核标准，提升主数据数据质量</strong><br>探查、解决、处理数据质量问题，对数据质量问题进行分类、关联绩效、问题来源的业务/技术培训等，提升数据价值。</li>
+<li><strong>主数据管理，对数据进行集成共享</strong><br>主数据数据模型建设，将各类处理过的优质生产数据统一集中存储，便于调用、共享。支持大数据应用集成。</li>
+<li><strong>元数据管理，掌握数据关系脉络，管理知识库</strong><br>实现对数据间流转、依赖关系的影响和血缘分析，明确数据关系脉络；知识库存储（定义、分类、信息项及其业务描述、技术定义等）；管理归属（管理信息项的系统、部门、人员）。</li>
+<li><strong>数据安全管控</strong><br>完备数据平台安全防守，应对来自后端、前端的安全风险，提高数据平台的高可用性。</li>
+<li><strong>数据服务集成</strong><br>打通需求平台到应用建设的层层审批，缩短从业务到IT的距离；建立数据需求确认-数据开发-数据发布-订阅/推送的流程，以便决策者能对市场变化做出敏捷反应。</li>
+<li><strong>权责体系建设</strong><br>业务模块和技术模块资源分配，权责到人。如果出现问题，由谁处理，如果未处理，向谁报告，由谁替补处理。</li>
+</ul>
+<p>最后就是项目落实。这需要不断跟进项目进展、合理安排资源。这个过程中，沟通是及时完成的保障，执行是项目关键。</p>
+<p><img src="http://ww1.sinaimg.cn/large/a92183f7gy1fe3xhy3lskj20od09r0ui.jpg" alt=""></p>
+<h3 id="数据管控的层面"><a href="#数据管控的层面" class="headerlink" title="数据管控的层面"></a>数据管控的层面</h3><p><strong>组织层面</strong></p>
+<ul>
+<li>数据使用者（领导决策层）<br>数据使用、统计分析、数据质量绩效执行</li>
+<li>数据管理者（IT管理层）<br>数据管控、数据安全、数据质量绩效执行</li>
+<li>数据生产者（业务层）<br>数据生产、数据质量初审、数据质量绩效执行</li>
+</ul>
+<p><strong>管理层面</strong></p>
+<ul>
+<li>制定数据标准（定义标准、使用标准）</li>
+<li>制定数据管理机制（管理流程、权责关系）</li>
+<li>制定数据应用规则（数据集成、分发规则）</li>
+<li>制定数据模型（统一数据视图）</li>
+</ul>
+<p><strong>技术层面</strong></p>
+<ul>
+<li>数据探查</li>
+<li>数据清洗、质量提升</li>
+<li>数据集成、监控</li>
+<li>数据安全</li>
+</ul>
+<p><strong>执行层面</strong></p>
+<ul>
+<li>业务梳理</li>
+<li>数据分析</li>
+<li>绩效评估</li>
+<li>计划-执行-检查-处理 PDCA循环管控机制</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/a92183f7gy1fe466ricq5j20qe0gp0y7.jpg" alt=""></p>
+<h2 id="数据标准"><a href="#数据标准" class="headerlink" title="数据标准"></a>数据标准</h2><p>通过建立一整套数据规范、管控流程和技术工具管理业务的各种重要信息，如产品、客户、机构、账户等信息在企业内外使用和交换的一致和准确。数据标准可分为技术标准和业务标准。</p>
+<h3 id="文档管理"><a href="#文档管理" class="headerlink" title="文档管理"></a>文档管理</h3><ul>
+<li>制定<br>维护数据标准相关文档类信息</li>
+<li>发布<br>对数据标准相关文档进行发布管理</li>
+<li>版本管理<br>对数据标准相关文档的历史版本信息提供查看功能</li>
+</ul>
+<h3 id="信息项管理"><a href="#信息项管理" class="headerlink" title="信息项管理"></a>信息项管理</h3><h4 id="标准代码定义"><a href="#标准代码定义" class="headerlink" title="标准代码定义"></a>标准代码定义</h4><p>维护数据标准代码<br>1.编码规则</p>
+<ul>
+<li>国家标准</li>
+<li>行业标准</li>
+<li>自定义标准</li>
+</ul>
+<p>2.公共信息标准代码</p>
+<ul>
+<li>地址区域：洲/国家/省份（州、自治区）/城市/地区</li>
+<li>其他信息：电话号码、币种、语种、职业、职务</li>
+</ul>
+<p>3.公共信息非标准代码</p>
+<ul>
+<li>业务类型代码、业务板块代码、证件类型代码、区域属性</li>
+</ul>
+<p>4.非公共信息代码</p>
+<ul>
+<li>业务相关代码</li>
+<li>客户相关代码</li>
+<li>财务相关代码</li>
+<li>……</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/a92183f7gy1fe46digawwj20gk0au75k.jpg" alt=""></p>
+<h4 id="主数据定义"><a href="#主数据定义" class="headerlink" title="主数据定义"></a>主数据定义</h4><p>信息梳理</p>
+<ul>
+<li>业务梳理：业务流、业务职责、业务与组织机构的关联</li>
+<li>数据梳理：数据流、数据格式、数据与业务的关联</li>
+<li>应用梳理：数据的应用规则、范围、数据的关联分析</li>
+</ul>
+<p>数据标准化</p>
+<ul>
+<li>通用业务词汇表</li>
+<li>数据格式统一：币种、国别、小数点、量纲统一</li>
+<li>数据校验：唯一性、字典、值域、正则表达式等约束</li>
+<li>参照完整性校验：外键约束</li>
+<li>一致性：不同粒度维度下指标核算关系、指标间钩稽关系</li>
+</ul>
+<p>维护主数据标准</p>
+<ul>
+<li>明确每类核心业务数据都应该包含哪些指标，指标的依据来源，指标之间的转换关系，以及各类核心业务数据之间的关联</li>
+<li>主数据逻辑数据建模，构建指标体系</li>
+</ul>
+<h3 id="数据规则管理"><a href="#数据规则管理" class="headerlink" title="数据规则管理"></a>数据规则管理</h3><p><strong>数据探查规则</strong></p>
+<ul>
+<li>字典规则</li>
+<li>值域规则</li>
+<li>正则表达式规则</li>
+<li>主外键关联规则</li>
+<li>函数依赖规则</li>
+<li>自定义规则</li>
+</ul>
+<p><strong>数据清洗规则</strong></p>
+<ul>
+<li>数据匹配规则</li>
+<li>数据补全规则</li>
+<li>地址、身份证标准化规则</li>
+<li>统一索引规则（客户ID/商品ID/订单号等数据一致性规则）</li>
+<li>自定义规则</li>
+</ul>
+<p><strong>查询与反馈</strong></p>
+<ul>
+<li>数据标准文档查询与反馈</li>
+<li>数据标准信息项查询</li>
+</ul>
+<h3 id="应用代码标准符合性检查"><a href="#应用代码标准符合性检查" class="headerlink" title="应用代码标准符合性检查"></a>应用代码标准符合性检查</h3><p>新应用开发者将本应用代码与标准代码进行匹配，提交系统检查</p>
+<h2 id="数据质量"><a href="#数据质量" class="headerlink" title="数据质量"></a>数据质量</h2><p>对支持业务需求的数据进行全面质量管理，通过数据质量相关管理办法、组织、流程、评价考核规则的制定，及时发现并解决数据质量问题，提升数据的完整性、及时性、准确性及一致性，提升业务价值。</p>
+<h3 id="数据质量综合评估"><a href="#数据质量综合评估" class="headerlink" title="数据质量综合评估"></a>数据质量综合评估</h3><p><strong>可访问性</strong></p>
+<ul>
+<li>源数据可访问性</li>
+<li>结果数据和报表页面的可访问性</li>
+<li>用户体验（查询性能、等待时长、展现格式）</li>
+</ul>
+<p><strong>可用性</strong></p>
+<ul>
+<li>正确性：唯一性检查、非空检查、类型检查、格式检查、值域检查、代码检查、指标标准偏差检查、数据集市指标准确性检查。</li>
+<li>完整性：外键约束检查（参照完整性，指一个表A的外键不包含无效的键值，例如，借据表中记录了合同号，但是在合同表中无法找到相关记录）、源数据与主数据映射关系检查。</li>
+<li>一致性：业务规则检查、指标符合钩稽关系、不同粒度维度下指标核算。</li>
+</ul>
+<p><strong>及时性</strong><br>数据平台数据生成的及时性检查</p>
+<p><img src="http://ww1.sinaimg.cn/large/a92183f7gy1fe4uh1y134j20sn0gtacr.jpg" alt=""></p>
+<h3 id="数据质量问题分析"><a href="#数据质量问题分析" class="headerlink" title="数据质量问题分析"></a>数据质量问题分析</h3><p>对历史出现过的的数据质量问题进行影响性量化分析，对潜在的数据问题进行预判和防范。可从以下几方面分析：</p>
+<ul>
+<li>问题分布分析：收集质量问题的统计分布情况，针对性地进行优化，改善数据质量</li>
+<li>问题趋势分析：对数据问题发生地趋势进行监控，做好潜在数据质量问题的防备</li>
+<li>稽核执行报告：将问题发现-评估影响-解决过程形成报告机制，提高数据生产者、管理者与消费者的信息传递速度</li>
+</ul>
+<h3 id="数据质量问题管理"><a href="#数据质量问题管理" class="headerlink" title="数据质量问题管理"></a>数据质量问题管理</h3><ul>
+<li>问题发现</li>
+<li>问题分布</li>
+<li>问题处理</li>
+<li>问题归档</li>
+</ul>
+<h3 id="数据质量知识管理"><a href="#数据质量知识管理" class="headerlink" title="数据质量知识管理"></a>数据质量知识管理</h3><ul>
+<li>知识库维护：对数据质量问题的归档文件进行维护，形成专业知识库，建立查询索引，为项目培训提高知识储备</li>
+<li>知识库查询：可通过查询历史数据问题的归档文件回溯该问题的成因、影响、处理过程。</li>
+</ul>
+<h2 id="元数据管理"><a href="#元数据管理" class="headerlink" title="元数据管理"></a>元数据管理</h2><p>元数据（Metadata）是关于数据的数据，即对数据的描述信息。根据其属性的不同，元数据可分为技术元数据和业务元数据。元数据管理是元数据的定义、收集、管理和发布的方法、工具及流程的集合，通过完成对相关业务元数据及技术元数据的集成及应用，提供数据路径、数据归属信息，并对业务术语、文档进行集中管理，借助变更报告、影响分析以及业务术语管理等应用，以此保证数据的完整性、控制数据质量、减少业务术语歧义和建立业务人员之间、技术人员之间，以及双方的沟通平台。元数据使得用户可以掌握数据的历史情况，如数据从哪里来？流通时间有多长？更新频率是多大？数据元素的含义是什么？对它已经进行了哪些计算、转换和筛选等等。在需求不确定情况下，在瞬间万变的商业环境下，元数据可以更好的支持需求的变化，降低项目风险。<strong>元数据管理是企业级数据仓库中的关键组件，贯穿于建立数据仓库的整个过程。</strong></p>
+<blockquote>
+<p>Metadata is structured information that describes the characteristics/attributes of a data element.  Things like key identifiers, data descriptions and file types are examples of metadata.（From CWM）</p>
+</blockquote>
+<p><strong>元数据的作用</strong></p>
+<ul>
+<li>提供一份数据定义和元素的详细示意图，有利于发现冗余的定义和元素</li>
+<li>帮助用户理解数据的来龙去脉、关系和相关属性</li>
+<li>数据集成所必须的：参照性、引用性、血缘分析、影响分析、变化分析</li>
+<li>减少数据冗余，增加信息共享，避免异构结构定义</li>
+</ul>
+<p>通常把元数据分为<strong>技术元数据</strong>（Technical Metadata）和<strong>业务元数据</strong>（Business Metadata）。技术元数据是描述关于数据仓库技术细节的数据，这些元数据应用于开发、管理和维护数据仓库；业务元数据从商业和业务的角度描述数据仓库的数据，提供了良好的语义层定义，业务元数据使业务人员能够更好的理解数据仓库分析出来的数据。</p>
+<h3 id="技术元数据"><a href="#技术元数据" class="headerlink" title="技术元数据"></a>技术元数据</h3><blockquote>
+<p><a href="http://wiki.mbalib.com/wiki/%E6%8A%80%E6%9C%AF%E5%85%83%E6%95%B0%E6%8D%AE" target="_blank" rel="external"><strong>技术元数据 - MBA智库百科</strong></a><br>技术元数据是指数据仓库的设计和管理人员用于开发和日常管理数据仓库是用的数据。包括：数据源信息；数据转换的描述；数据仓库内对象和数据结构的定义；数据清理和数据更新时用的规则；源数据到目的数据的映射；用户访问权限，数据备份历史记录，数据导入历史记录，信息发布历史记录等。</p>
+</blockquote>
+<ul>
+<li>源系统数据结构定义：导入源系统数据字典，并以系统-表-字段的层级关系展现各级数据关系</li>
+<li>主数据ER模型：导入主数据ERwin模型，解析生成模型各层级关系</li>
+<li>数据与映射关系定义：定义数据平台各部分，以及源系统间的数据映射关系。</li>
+<li>数据影响与血缘分析：依赖所定义的数据平台各部分，图形化展现数据变化影响和数据问题溯源。</li>
+<li>数据变化对比分析：针对元数据不同版本进行差异部分识别与比较</li>
+</ul>
+<h3 id="业务元数据"><a href="#业务元数据" class="headerlink" title="业务元数据"></a>业务元数据</h3><blockquote>
+<p><a href="http://wiki.mbalib.com/wiki/%E4%B8%9A%E5%8A%A1%E5%85%83%E6%95%B0%E6%8D%AE" target="_blank" rel="external"><strong>业务元数据 - MBA智库百科</strong></a><br>业务元数据是数据仓库环境的关键元数据，是用户访问时了解业务数据的途径，内容来源包括多个地方：用例建模(Case Modeling)工具、控制数据库、数据库目录和数据抽 取／转换／加载的工具。另外的业务元数据，例如对象连接关系或数据质量指标，是用元数 据库管理工具直接输入的。</p>
+</blockquote>
+<ul>
+<li>代码定义：定义数据平台公共代码及其源系统代码的关系</li>
+<li>报表表头定义：定义数据平台业务报表的构成元素与结构</li>
+<li>报表指标定义：定义数据平台报表中指标的计算规则</li>
+<li>报表指标钩稽关系分析：定义数据平台业务报表中指标的依赖关系，并进行影响与血缘分析</li>
+</ul>
+<h3 id="CWM元模型"><a href="#CWM元模型" class="headerlink" title="CWM元模型"></a>CWM元模型</h3><p>在使用元数据的同时，随着数据仓库市场的发展，业界出现许多数据仓库管理和分析的工具，各种工具使用不同的元数据标准来表示和处理，不同系统之间的迁移、数据交换变得困难。于是，我们希望用一种单一的元数据标准，使得各种组织的元数据具有单一的元模型（MetaModel），因此，需要建立一种标准使得不同的数据仓库和商业智能系统之间可以相互交换元数据。<br>公共仓库元模型CWM(Common Warehouse Metamodel)的主要目的是在异构环境下，帮助不同的数据仓库工具、平台和元数据知识库进行元数据交换。</p>
+<p>CWM标准为数据仓库和商业智能（BI）工具之间共享元数据，制定了一整套关于语法和语义的规范，它主要包含以下四个方面的内容：</p>
+<ul>
+<li>CWM（Metamodel）：描述数据仓库元数据的模型</li>
+<li>CWM XML：CWM元数据的XML表示</li>
+<li>CWM DTD：用来验证CWM XML文档</li>
+<li>CWM IDL：DW/BI共享元数据的应用程序访问接口（API）</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/a92183f7gy1feczp9ler6j20uq08xtaz.jpg" alt=""></p>
+<p>CWM1.1的体系结构如图所示，包括五个层次：对象模型层、基础层、资源层、分析层和管理层。</p>
+<ul>
+<li><p>对象模型层（Object Model）：构造和描述其它CWM包中的元模型类。</p>
+</li>
+<li><p>基础层（Foundation）:  包括表示CWM概念和结构的模型元素，这些模型元素又可被其他CWM包所共享，它由以下六个子包组成：<br>1.业务信息（Business Information）包：包括表示模型元素业务信息的类与关联；<br>2.数据类型（Data Types）包：包括表示建模者可以用来创建所需数据类型的结构的类与关联；<br>3.表达式（Expressions）包：包括表示表达式树的类与关联；<br>4.键和索引（Keys and Indexes）包：包括表示键和索引的类与关联；<br>5.软件部署（Software Deployment）包：包括软件如何在数据仓库中发布的类与关联；<br>6.类型映射（Type Mapping）包：包括表示不同系统之间数据类型映射的类与关联。</p>
+</li>
+<li><p>资源层（Resource）：用于描述数据资源的包，它包括以下四个子包：<br>0.对象（Object）包：包括表示其他类型数据资源的元数据的类与管理；<br>1.关系（Relational）包：包括表示关系型数据资源的元数据的类与关联；<br>2.记录（Record）包：包括表示记录型数据资源的元数据的类与关联；<br>3.多维（Multidimensional）包：包括表示多维数据资源的元数据的类与关联；<br>4.XML包：包括表示XML数据资源的元数据的类与关联。</p>
+</li>
+<li><p>分析层（Analysis）：它由以下五个子包组成：<br>1.转换（Transformation）包：包含表示数据抽取和转换工具的元数据的类和关联；<br>2.OLAP包：包含表示OLAP工具的元数据的类与关联；<br>3.数据挖掘（Data Mining）包：包含表示数据挖掘工具的元数据的类与关联；<br>4.信息可视化（Information Visualization）包：包含表示信息可视化工具的元数据的类与关联；<br>5.业务术语（Business Nomenclature）包：包括表示分类业务的元数据的类与关联。</p>
+</li>
+<li><p>管理层（Management）：用于描述数据仓库管理的包，它包括以下两个子包：<br>1.仓库过程（Warehouse Process）包：包括表示仓库过程的元数据的类与关联；<br>2.仓库操作（Warehouse Operation）包：包括表示仓库操作结果的元数据的类与关联。</p>
+</li>
+</ul>
+<p>CWM作为数据仓库领域的元模型标准，在元数据的集中管理、元数据互操作和元数据交换方面发挥重要作用。CWM是一个国际性、厂商无关、平台无关的规范，提供了一个公共的元模型框架，将数据仓库领域的公共特性纳入元模型中。</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/oversky2003/article/details/15020103" target="_blank" rel="external"><strong>元数据管理工具</strong> - 数据工匠-PowerData的博客</a><br>一种是元数据管理通用解决方案，如石竹软件的MetaOne产品、Data Advantage Group 的 MetaCenter；<br>另一种是数据仓库统一解决方案，往往突出自己是整体解决方案供应商，自己产品的集成性相对好些，如Informatic 的SuperGlue Metadata Manager、CA的Advantage Repository、IBM的Metastage等<br>开源元数据管理（Pentaho Metadata Editor）</p>
+</blockquote>
+<h3 id="元数据管理系统设计"><a href="#元数据管理系统设计" class="headerlink" title="元数据管理系统设计"></a>元数据管理系统设计</h3><p>CWM标准提供了一个公共的元模型框架，为不同厂商、平台的异构数据资源提供了元模型，但是在个性化和精细程度上是个短板，如果要适配行业个性化需求，就要在CWM标准基础上丰富设计元数据管理系统。</p>
+<h4 id="参考体系架构"><a href="#参考体系架构" class="headerlink" title="参考体系架构"></a>参考体系架构</h4><p>如需自建元数据管理系统，可在企业原有的商业智能基础上，建立针对元数据的获取-存储-维护-应用层次架构。总体应用架构如图所示：<br><img src="http://ww1.sinaimg.cn/large/a92183f7gy1fek6n46mxwj211s0q6q9w.jpg" alt=""></p>
+<h4 id="功能需求"><a href="#功能需求" class="headerlink" title="功能需求"></a>功能需求</h4><ul>
+<li><p>元数据获取</p>
+<ul>
+<li>元数据手动采集<br>手工采集生成元数据定义文件</li>
+<li>元数据自动采集<br>提供针对不同目标应用的适配器，实现周期性定时的自动采集</li>
+</ul>
+</li>
+<li><p>版本管理<br>提供数据定版、版本回溯的功能</p>
+</li>
+<li><p>访问控制<br>提供针对元数据细节操作的访问控制</p>
+</li>
+<li><p>SQL脚本解析</p>
+</li>
+<li><p>元数据存储</p>
+</li>
+<li><p>元数据基本功能<br>维护<br>变更<br>查询<br>统计</p>
+</li>
+<li><p>元数据分析功能<br>血缘分析<br>影响分析<br>实体关联分析<br>实体差异分析<br>指标一致性分析</p>
+</li>
+</ul>
+<h4 id="元数据质量管理"><a href="#元数据质量管理" class="headerlink" title="元数据质量管理"></a>元数据质量管理</h4><p>一致性检查<br>参照完整性检查<br>元数据属性检查</p>
+<h4 id="元数据服务接口"><a href="#元数据服务接口" class="headerlink" title="元数据服务接口"></a>元数据服务接口</h4><p>封装技术实现<br>封装接口应用</p>
+<h3 id="元数据应用"><a href="#元数据应用" class="headerlink" title="元数据应用"></a>元数据应用</h3><ul>
+<li>指标库管理</li>
+<li>业务术语自助学习</li>
+<li>维表库管理</li>
+<li>接口管理</li>
+</ul>
+<h2 id="主数据管理"><a href="#主数据管理" class="headerlink" title="主数据管理"></a>主数据管理</h2><p>主数据（Master Data）指描述核心业务实体的数据，如客户、机构、员工、产品等。这些数据变化相对缓慢并通常在企业内跨业务重复使用。主数据管理适用于管理、协调、监控与企业主要业务实体相关联的主数据的一系列规则、技术、应用、策略和程序。当前大多数企业的主数据跨越几乎所有的组织业务部门，分布在多个不同的系统中。</p>
+<blockquote>
+<p><a href="http://wiki.mbalib.com/wiki/%E4%B8%BB%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86" target="_blank" rel="external"><strong>主数据管理 - MBA智库百科</strong></a><br>主数据管理(Master Data Management ，MDM)是指一组约束和方法用来保证一个企业内主题域和系统内相关数据和跨主题域和系统的相关数据的实时性、含义和质量。</p>
+</blockquote>
+<h3 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h3><ul>
+<li>类型定义</li>
+<li>编码规则</li>
+<li>属性定义</li>
+<li>流程定义</li>
+<li>主数据ER模型</li>
+</ul>
+<h3 id="数据整合集成"><a href="#数据整合集成" class="headerlink" title="数据整合集成"></a>数据整合集成</h3><p>数据分散在各个应用系统中，形成信息孤岛，缺少企业级视角的数据分析，无法对各个领域的数据形成统一的数据视图<br>软件开发采用了多种不同的技术，部署在多种运行环境中，过多底层架构，接口复杂，取数途径困难，取数方法复杂<br>各应用领域数据标准不同，造成数据格式、数据结构不一致<br>降低企业决策灵活性和创新速度</p>
+<ul>
+<li>数据汇集</li>
+<li>数据合并</li>
+<li>清理监管</li>
+</ul>
+<h3 id="数据维护"><a href="#数据维护" class="headerlink" title="数据维护"></a>数据维护</h3><ul>
+<li><p>数据管理</p>
+</li>
+<li><p>数据封存</p>
+</li>
+<li><p>字典表管理<br>字典、缓慢变化维</p>
+</li>
+</ul>
+<h2 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h2><p>通过建立对数据及相关信息系统进行保护的一系列措施，确保数据免遭未经授权的访问、使用、修改或删除，保证数据完整性、保密性和可用性，具体可分为管理和技术两大类措施。</p>
+<h3 id="系统安全"><a href="#系统安全" class="headerlink" title="系统安全"></a>系统安全</h3><ul>
+<li>灾备管理<br>异地容灾<br>磁盘阵列<br>数据备份<br>双机容错</li>
+</ul>
+<ul>
+<li><p>进程安全<br>数据处理期间的进程保护，包括进程锁、进程参数（登录密码、文件位置、配置信息）</p>
+</li>
+<li><p>VPN/防火墙</p>
+</li>
+</ul>
+<h3 id="应用安全"><a href="#应用安全" class="headerlink" title="应用安全"></a>应用安全</h3><ul>
+<li><p>SQL注入</p>
+</li>
+<li><p>XSS攻击<br>跨站脚本攻击(Cross Site Scripting)</p>
+</li>
+<li><p>CSRF攻击<br>CSRF（Cross-site request forgery）跨站请求伪造</p>
+</li>
+</ul>
+<h3 id="信息安全"><a href="#信息安全" class="headerlink" title="信息安全"></a>信息安全</h3><ul>
+<li><p>数据脱敏</p>
+</li>
+<li><p>数据加密</p>
+</li>
+</ul>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><ul>
+<li><p>文件系统<br>权限管控：文件属主、同组用户、其他用户权限<br>数据管控：生产用临时文件访问控制（避免恶意读写）<br>配置文件管控：Mac地址防护<br>环境变量：测试环境与生产环境变量配置</p>
+</li>
+<li><p>数据库<br>用户：管理员、开发、测试<br>数据库对象：数据库、表、视图、宏、过程</p>
+</li>
+<li><p>应用权限<br>单点登录<br>用户权限分组<br>上传文件校验<br>访问IP异常</p>
+</li>
+</ul>
+<h2 id="数据服务"><a href="#数据服务" class="headerlink" title="数据服务"></a>数据服务</h2><h3 id="访问渠道"><a href="#访问渠道" class="headerlink" title="访问渠道"></a>访问渠道</h3><ul>
+<li><p>Web Portal</p>
+</li>
+<li><p>APP</p>
+</li>
+</ul>
+<h3 id="数据内容"><a href="#数据内容" class="headerlink" title="数据内容"></a>数据内容</h3><ul>
+<li><p>Dashboard</p>
+</li>
+<li><p>Reports</p>
+</li>
+<li><p>Visualized Templete</p>
+</li>
+</ul>
+<h3 id="推送服务"><a href="#推送服务" class="headerlink" title="推送服务"></a>推送服务</h3><ul>
+<li><p>Subscript - RSS/Atom (Email)</p>
+</li>
+<li><p>Notification - APP</p>
+</li>
+<li><p>RESTful API</p>
+</li>
+</ul>
+<h3 id="需求管控"><a href="#需求管控" class="headerlink" title="需求管控"></a>需求管控</h3><ul>
+<li><p>需求管控平台接入</p>
+</li>
+<li><p>数据发布自动标记需求</p>
+</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="https://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?site_id=10&amp;contentarea_by=Information%20management&amp;sort_by=Date&amp;sort_order=2&amp;start=1&amp;end=7&amp;topic_by=-1&amp;product_by=-1&amp;type_by=%E6%89%80%E6%9C%89%E7%B1%BB%E5%88%AB&amp;show_abstract=true&amp;search_by=%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E7%B3%BB%E5%88%97&amp;industry_by=&amp;series_title_by=" target="_blank" rel="external">IBM developerworks® 大数据治理系列</a></li>
+</ol>
+
+	
+	
+	
+	
+</div>
+
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/03/27/从数据到决策：建设数据仓库的数据治理体系/" 
+            data-url="http://instore.top/2017/03/27/从数据到决策：建设数据仓库的数据治理体系/"
+            data-title="从数据到决策：建设数据仓库的数据治理体系"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/02/25/生来并行，天生超越——MPP架构原理及实现/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Liang3p's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        liang3p@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="mailto:liang3p@gmail.com" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">3</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">8</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/liang3p" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+    
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/profile.php?id=100011242741015" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+    
+    <!-- Google + -->
+    
+    <a href="https://plus.google.com/115291231508178529929" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+    
+    <!-- Weibo -->
+    
+    <a href="http://weibo.com/2837545975" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-weibo.png);">
+        <span class="visuallyhidden">Weibo</span>
+    </button></a>
+    
+    
+    <!-- Instagram -->
+    
+    
+    
+    <!-- Tumblr -->
+    
+    
+    
+    <!-- Github -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;instore.top | Learn More, Share More.</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"instore"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+		
+    </body>
+		
+	
+</html>
